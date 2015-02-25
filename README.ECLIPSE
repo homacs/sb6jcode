@@ -7,9 +7,6 @@ in the build configuration to point to:
 2. the lwjgl javadoc zip for the doc tooltips during development
 3. and the lwjgl src.zip for source lookup during debugging
 
-Do the same for 
-- slick2D (Texture loading and stuff).
-- vecmath (vector and matrix mathematics)
 
  
  
