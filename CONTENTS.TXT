@@ -1,0 +1,38 @@
+
+
+This is an overview of the examples ordered by chapter, section and subsection 
+of appearance in the book.
+
+Most of the examples are ports of the original C++ code examples. The examples with
+a star (*) as postfix are written by myself to fill gaps.
+
+
+Chapter I
+=========
+2 Our First OpenGL Program
+	1. Creating a Simple Application: 			simpleclear
+	2. Using Shaders: 							singlepoint
+	3. Drawing our First Triangle:  			singletri
+3 Following the Pipeline
+	1. Passing Data to the Vertex Shader:		movingtri
+	2. Passing Data from Stage to Stage:		stage2stage*
+	2.1. Interface Blocks:						interfaceBlock*
+	3. Tesselation								tessellatedtri	
+	4. Geometry Shading							tessellatedgstri
+	5. Frabment Shaders							fragcolorfrompos
+4 Math for 3D Graphics							<TODO>
+5 Data
+	1. Buffers									
+		Allocating and filling buffers          singletrib*
+	    Two vertex shader input buffers         singletrimsi*
+        Single buffer multiple inputs           singletrisbmi*
+    2. Uniforms
+        Uniform Block                           singletrisubo*
+        Using Uniforms to Transform Geometry    spinnycube
+    3. Shader Storage Blocks					<TODO>
+    4. Atomic Counters							<TODO>
+    5. Textures									
+    	Creating and Initializing Textures		simpletexture
+    	Texture Coordinates						simpletexcoords
+    	Mipmaps									tunnel
+	
