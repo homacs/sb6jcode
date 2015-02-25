@@ -19,7 +19,7 @@ Chapter I
 	2.1. Interface Blocks:						interfaceBlock*
 	3. Tesselation								tessellatedtri	
 	4. Geometry Shading							tessellatedgstri
-	5. Frabment Shaders							fragcolorfrompos
+	5. Fragment Shaders							fragcolorfrompos
 4 Math for 3D Graphics							<TODO>
 5 Data
 	1. Buffers									
@@ -35,4 +35,4 @@ Chapter I
     	Creating and Initializing Textures		simpletexture
     	Texture Coordinates						simpletexcoords
     	Mipmaps									tunnel
-	
+		Array Textures							alienrain

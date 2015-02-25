@@ -1,10 +1,8 @@
 package wrapmodes;
 
 
-import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-import org.lwjgl.BufferUtils;
 
 import sb6.Application;
 
@@ -13,18 +11,12 @@ import sb6.Application;
 import sb6.BufferUtilsHelper;
 import sb6.Shader;
 import sb6.ktx.KTX;
-import sb6.vmath.Matrix4x4f;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL42.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL42.*;
-import static org.lwjgl.system.MemoryUtil.memAddress;
 
 
 public class WrapModes extends Application {
@@ -160,17 +152,5 @@ public class WrapModes extends Application {
         glDeleteTextures(texture);
 	}
 
-
-
-	@Override
-	protected void onKey(int key, int action) {
-        if (action != 0)
-        {
-            switch (key)
-            {
-            }
-        }
-
-	}
 
 }

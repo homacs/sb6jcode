@@ -10,11 +10,7 @@ import sb6.ktx.KTX;
 import sb6.vmath.Matrix4x4f;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL42.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL42.*;
 
 
 public class Tunnel extends Application {

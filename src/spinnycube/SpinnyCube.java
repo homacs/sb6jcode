@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*; // buffer management
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL31.*;
 
 import java.nio.FloatBuffer;
 
@@ -237,11 +236,6 @@ public class SpinnyCube extends Application {
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
-	}
-
-	private void println(String string, Matrix4x4f mv_matrix) {
-		System.out.println(string);
-		System.out.println(mv_matrix);
 	}
 
 	protected void onResize(int w, int h) {

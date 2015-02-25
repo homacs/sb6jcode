@@ -1,6 +1,5 @@
 package sb6;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR;
 import static org.lwjgl.opengl.GL30.glClearBuffer;
 
 import java.nio.FloatBuffer;

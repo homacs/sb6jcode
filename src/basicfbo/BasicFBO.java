@@ -13,7 +13,6 @@ import java.nio.ShortBuffer;
 
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.*;
 
 import sb6.Application;
 import sb6.GLAPIHelper;
