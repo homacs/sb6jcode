@@ -8,7 +8,12 @@ import org.lwjgl.opengl.*;
 
 import sb6.GLAPIHelper;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.AMDDebugOutput.GL_DEBUG_CATEGORY_API_ERROR_AMD;
+import static org.lwjgl.opengl.AMDDebugOutput.GL_DEBUG_CATEGORY_DEPRECATION_AMD;
+import static org.lwjgl.opengl.AMDDebugOutput.GL_DEBUG_CATEGORY_UNDEFINED_BEHAVIOR_AMD;
+import static org.lwjgl.opengl.AMDDebugOutput.GL_DEBUG_CATEGORY_WINDOW_SYSTEM_AMD;
 import static org.lwjgl.opengl.GL11.*; // for constants like GL_TRUE
+import static org.lwjgl.opengl.GL43.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 
@@ -101,7 +106,12 @@ public abstract class Application extends GLAPIHelper{
 			@Override
 			public void invoke(long window, int key, int scancode, int action,
 					int mods) {
-				Application.this.onKey(key, action);
+				try {
+					Application.this.onKey(key, action);
+				} catch (Throwable e) {
+					e.printStackTrace();
+					requestExit(-1);
+				}
 			}
 		};
 		glfwSetKeyCallback(window, keyCB);
@@ -236,7 +246,7 @@ public abstract class Application extends GLAPIHelper{
 		info.setWindowHeight(h);
 	}
 
-	protected void onKey(int key, int action) {
+	protected void onKey(int key, int action) throws Throwable {
 
 	}
 
@@ -252,9 +262,24 @@ public abstract class Application extends GLAPIHelper{
 
 	}
 
-	void onDebugMessage(int source, int type, int id, int severity,
+	void onDebugMessage(int source, int typeOrCategory, int id, int severity,
 			int length, String message) {
-		fatal(message);
+		switch (typeOrCategory) {
+		case GL_DEBUG_TYPE_ERROR:
+		case GL_DEBUG_CATEGORY_API_ERROR_AMD:
+			fatal(message);
+			break;
+		case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+		case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+		case GL_DEBUG_TYPE_PORTABILITY:
+		case GL_DEBUG_CATEGORY_WINDOW_SYSTEM_AMD:
+		case GL_DEBUG_CATEGORY_DEPRECATION_AMD:
+		case GL_DEBUG_CATEGORY_UNDEFINED_BEHAVIOR_AMD:
+			error(message);
+			break;
+		default:
+			warn(message);
+		}
 	}
 
 	static Cursor getMousePosition() {
@@ -371,6 +396,11 @@ public abstract class Application extends GLAPIHelper{
 		// requires trailing slash!
 		return "res/media/";
 //		return "../sb6code/bin/media/";
+	}
+
+	public void setVSync(boolean enable) {
+        info.flags.vsync = enable;
+        glfwSwapInterval(info.flags.vsync?1:0);
 	}
 
 

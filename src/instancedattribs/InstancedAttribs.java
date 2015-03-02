@@ -1,7 +1,6 @@
 package instancedattribs;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -10,15 +9,9 @@ import static org.lwjgl.opengl.GL33.*;
 
 import java.nio.FloatBuffer;
 
-import org.lwjgl.system.MemoryUtil;
-
-import static sb6.vmath.MathHelper.*;
 import sb6.BufferUtilsHelper;
 import sb6.application.Application;
-import sb6.ktx.KTX;
 import sb6.shader.Shader;
-import sb6.vmath.Matrix4x4f;
-import sb6.vmath.Vector3f;
 
 
 /**

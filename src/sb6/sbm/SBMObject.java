@@ -19,6 +19,18 @@ import sb6.BufferUtilsHelper;
 import sb6.application.Application;
 
 public class SBMObject {
+	public interface SBMSubObjectInfo {
+
+		void setFirst(int first);
+
+		void setCount(int count);
+
+		int getFirst();
+
+		int getCount();
+
+	}
+
 	private static final int MAX_SUB_OBJECTS = 256;
 	private static final int SB6M_MAGIC = SB6M_FOURCC('S', 'B', '6', 'M');
 	private static final int SB6M_CHUNK_TYPE_INDEX_DATA = SB6M_FOURCC('I', 'N',
@@ -29,9 +41,11 @@ public class SBMObject {
 			'T', 'R', 'B');
 	private static final int SB6M_CHUNK_TYPE_SUB_OBJECT_LIST = SB6M_FOURCC('O',
 			'L', 'S', 'T');
+	@SuppressWarnings("unused")
 	private static final int SB6M_CHUNK_TYPE_COMMENT = SB6M_FOURCC('C', 'M',
 			'N', 'T');
 	private static final int SB6M_VERTEX_ATTRIB_FLAG_NORMALIZED = 0x00000001;
+	@SuppressWarnings("unused")
 	private static final int SB6M_VERTEX_ATTRIB_FLAG_INTEGER = 0x00000002;
 
 	int vertex_buffer;
@@ -43,6 +57,31 @@ public class SBMObject {
 	int num_sub_objects;
 	SBMSubObjectDecl sub_object[] = new SBMSubObjectDecl[MAX_SUB_OBJECTS];
 
+	
+
+    public void get_sub_object_info(int index, SBMSubObjectInfo sub_object_info)
+    {
+        if (index >= num_sub_objects)
+        {
+        	sub_object_info.setFirst(0);
+        	sub_object_info.setCount(0);
+        }
+        else
+        {
+        	sub_object_info.setFirst(sub_object[index].first);
+            sub_object_info.setCount(sub_object[index].count);
+        }
+    }
+
+    public int get_sub_object_count() { 
+    	return num_sub_objects; 
+    }
+    public int get_vao() { 
+    	return vao; 
+    }
+
+	
+	
 	public void load(String filename) throws IOException {
 
 		free();
@@ -85,6 +124,7 @@ public class SBMObject {
 
 		SBMChunkHeader chunk = new SBMChunkHeader();
 
+		int offset = data.position();
 		// read all chunk headers
 		for (int i = 0; i < header.num_chunks; i++) {
 			chunk.init(data);
@@ -99,6 +139,9 @@ public class SBMObject {
 			} else {
 				// goto failed;
 			}
+			// chunk might have been skipped
+			offset += chunk.size;
+			data.position(offset);
 		}
 
 		// failed:
@@ -255,7 +298,7 @@ public class SBMObject {
 		return new String(buffer);
 	}
 
-	public class SBMSubObjectDecl {
+	public static class SBMSubObjectDecl implements SBMSubObjectInfo {
 		int first;
 		int count;
 
@@ -266,6 +309,25 @@ public class SBMObject {
 
 		public SBMSubObjectDecl() {
 		}
+
+		@Override
+		public void setFirst(int first) {
+			this.first = first;
+		}
+
+		@Override
+		public void setCount(int count) {
+			this.count = count;
+		}
+
+		public int getFirst() {
+			return first;
+		}
+
+		public int getCount() {
+			return count;
+		}
+		
 
 	}
 
