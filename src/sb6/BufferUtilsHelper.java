@@ -2,6 +2,7 @@ package sb6;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -14,20 +15,9 @@ public class BufferUtilsHelper {
 	public static final int SIZEOF_FLOAT = Float.SIZE/8;
 	public static final int SIZEOF_DOUBLE = Double.SIZE/8;
 
-	public static FloatBuffer createBuffer(float[] data) {
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length*SIZEOF_FLOAT); // space for 3 vec4
-		buffer.put(data);
-		return buffer;
-	}
-
 	
 	public static int sizeof(FloatBuffer buffer) {
 		return buffer.capacity() * SIZEOF_FLOAT;
-	}
-
-
-	public static ByteBuffer createByteBuffer(int capacity) {
-		return BufferUtils.createByteBuffer(capacity);
 	}
 
 
@@ -40,6 +30,14 @@ public class BufferUtilsHelper {
 	}
 
 
+	
+	/**
+	 * Returns a byte buffer of length len initialised with the elements of data
+	 * in the range [start, start+len].
+	 * Iterator of the created buffer refers to the first element.
+	 * @param data 
+	 * @return
+	 */
 	public static ByteBuffer createByteBuffer(byte[] data, int start,
 			int len) {
 		ByteBuffer buf = BufferUtils.createByteBuffer(len);
@@ -49,6 +47,16 @@ public class BufferUtilsHelper {
 	}
 
 
+	public static ByteBuffer createByteBuffer(int capacity) {
+		return BufferUtils.createByteBuffer(capacity);
+	}
+
+	/**
+	 * Returns a byte buffer of length data.length initialised with data.
+	 * Iterator of the created buffer refers to the first element.
+	 * @param data 
+	 * @return
+	 */
 	public static ByteBuffer createByteBuffer(byte[] data) {
 		ByteBuffer buf = BufferUtils.createByteBuffer(data.length);
 		buf.put(data);
@@ -57,11 +65,31 @@ public class BufferUtilsHelper {
 	}
 
 
+	/**
+	 * Returns a float buffer of length data.length initialised with data.
+	 * Iterator of the created buffer refers to the first element.
+	 * @param data 
+	 * @return
+	 */
 	public static FloatBuffer createFloatBuffer(float[] data) {
 		FloatBuffer fb = BufferUtils.createFloatBuffer(data.length);
 		fb.put(data);
 		fb.rewind();
 		return fb;
+	}
+
+
+	/**
+	 * Returns a short buffer of length data.length initialised with data.
+	 * Iterator of the created buffer refers to the first element.
+	 * @param data 
+	 * @return
+	 */
+	public static ShortBuffer createShortBuffer(short[] data) {
+		ShortBuffer sb = BufferUtils.createShortBuffer(data.length);
+		sb.put(data);
+		sb.rewind();
+		return sb;
 	}
 
 

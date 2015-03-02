@@ -89,12 +89,11 @@ public class SingleTriMSI extends Application {
 
         
         // define the triangle vertices
-		FloatBuffer positions = BufferUtilsHelper.createBuffer(new float[]{
+		FloatBuffer positions = BufferUtilsHelper.createFloatBuffer(new float[]{
 				0.25f, -0.25f, 0.5f,
 				-0.25f, -0.25f, 0.5f,
 				0.25f, 0.25f, 0.5f
 		});
-		positions.rewind(); // prepare FloatBuffer for reading
         
 		// Generate a name for the buffer
 		position_buffer = glGenBuffers();
@@ -122,12 +121,11 @@ public class SingleTriMSI extends Application {
 
 
 		// green color for all vertices
-		FloatBuffer color = BufferUtilsHelper.createBuffer(new float[]{
+		FloatBuffer color = BufferUtilsHelper.createFloatBuffer(new float[]{
 				0.f, 1.f, 0.0f,
 				0.f, 1.f, 0.0f,
 				0.f, 1.f, 0.0f,
 		});
-		color.rewind(); // prepare FloatBuffer for reading
 		
 		// Generate a name for the buffer
 		color_buffer = glGenBuffers();

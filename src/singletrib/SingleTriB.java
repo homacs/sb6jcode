@@ -88,12 +88,11 @@ public class SingleTriB extends Application {
 
         
         // define the triangle vertices
-		FloatBuffer data_buffer = BufferUtilsHelper.createBuffer(new float[]{
+		FloatBuffer data_buffer = BufferUtilsHelper.createFloatBuffer(new float[]{
 				0.25f, -0.25f, 0.5f, 1.0f,
 				-0.25f, -0.25f, 0.5f, 1.0f,
 				0.25f, 0.25f, 0.5f, 1.0f
 		});
-		data_buffer.rewind(); // prepare FloatBuffer for reading
 		int buffer_size = BufferUtilsHelper.sizeof(data_buffer);
 
         

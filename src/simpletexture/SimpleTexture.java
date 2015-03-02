@@ -69,8 +69,7 @@ public class SimpleTexture extends Application {
         generate_texture(data, 256, 256);
 
         // Assume the texture is already bound to the GL_TEXTURE_2D target
-        FloatBuffer data_fb = BufferUtilsHelper.createBuffer(data);
-        data_fb.rewind();
+        FloatBuffer data_fb = BufferUtilsHelper.createFloatBuffer(data);
         glTexSubImage2D(GL_TEXTURE_2D,  // 2D texture
                         0,              // Level 0
                         0, 0,           // Offset 0, 0

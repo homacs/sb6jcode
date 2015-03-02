@@ -95,7 +95,7 @@ public class SpinnyCube extends Application {
 
 		// define the triangle vertices and their color (ugly green)
 		FloatBuffer vertex_positions = BufferUtilsHelper
-				.createBuffer(new float[] {
+				.createFloatBuffer(new float[] {
 			            -0.25f,  0.25f, -0.25f,
 			            -0.25f, -0.25f, -0.25f,
 			             0.25f, -0.25f, -0.25f,
@@ -144,7 +144,6 @@ public class SpinnyCube extends Application {
 			            -0.25f,  0.25f,  0.25f,
 			            -0.25f,  0.25f, -0.25f
 				});
-		vertex_positions.rewind();
 
 		buffer = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, buffer);

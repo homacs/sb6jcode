@@ -94,12 +94,12 @@ public class SingleTriSBMI extends Application {
 
         
         // define the triangle vertices and their color (ugly green)
-		FloatBuffer data = BufferUtilsHelper.createBuffer(new float[]{
+		FloatBuffer data = BufferUtilsHelper.createFloatBuffer(new float[]{
 				0.25f,  -0.25f, 0.5f,   0.f, 1.f, 0.0f,
 				-0.25f, -0.25f, 0.5f,   0.f, 1.f, 0.0f,
 				0.25f,   0.25f, 0.5f,   0.f, 1.f, 0.0f,
 		});
-		data.rewind(); // prepare FloatBuffer for reading
+
         int position_components = 3; // the 3 first float components belong to the position
 		int data_row_size = (int)MemoryUtilHelper.offsetof(data, 6);
 		
