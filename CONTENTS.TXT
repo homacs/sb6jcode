@@ -46,3 +46,9 @@ Chapter II: In Depth
     1. Vertex Processing						<TODO>
 	2. Drawing Commands
 		Indexed Drawing							indexedcube
+		The Base Vertex							<TODO>
+		Combining Geometry using Primitive Restart <TODO>
+	    Instancing								grass
+	    
+	    
+	    

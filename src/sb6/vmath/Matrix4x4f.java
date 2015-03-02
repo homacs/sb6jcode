@@ -23,6 +23,27 @@ public class Matrix4x4f extends MatrixNxMf {
 		System.arraycopy(m.data, 0, data, 0, m.data.length);
 	}
 
+	/** Create a matrix providing the columns as 4 component vectors. 
+	 * @param column1
+	 * @param column2
+	 * @param column3
+	 * @param column4
+	 */
+	public Matrix4x4f(Vector4f column1, Vector4f column2,
+			Vector4f column3, Vector4f column4) {
+		this();
+		int dest = 0;
+		System.arraycopy(column1.data, 0, data, dest, rows);
+		dest += rows;
+		System.arraycopy(column2.data, 0, data, dest, rows);
+		dest += rows;
+		System.arraycopy(column3.data, 0, data, dest, rows);
+		dest += rows;
+		System.arraycopy(column4.data, 0, data, dest, rows);
+		dest += rows;
+		
+	}
+
 	public static float degrees(float angleInRadians)
 	{
 	    return angleInRadians * (float)(180.0/PI);
@@ -64,6 +85,12 @@ public class Matrix4x4f extends MatrixNxMf {
 		set(row, 3, v4);
 	}
 
+	public static Matrix4x4f translate(Vector3f v)
+	{
+	    return translate(v.get(0), v.get(1), v.get(2));
+	}
+
+	
 	public static Matrix4x4f translate(float x, float y, float z) {
 	    return new Matrix4x4f(new float[]{1.0f, 0.0f, 0.0f, 0.0f,
             	0.0f, 1.0f, 0.0f, 0.0f,
@@ -79,6 +106,20 @@ public class Matrix4x4f extends MatrixNxMf {
 		data[i++] = y;
 		data[i++] = z;
 		return this;
+	}
+
+	public static Matrix4x4f lookat(final Vector3f eye, final Vector3f center, Vector3f up)
+	{
+		Vector3f f = Vector3f.normalize(Vector3f.sub(center, eye));
+		Vector3f upN = Vector3f.normalize(up);
+		Vector3f s = Vector3f.cross(f, upN);
+		Vector3f u = Vector3f.cross(s, f);
+	    Matrix4x4f M = new Matrix4x4f(new Vector4f(s.get(0), u.get(0), -f.get(0), 0.0f),
+	                                new Vector4f(s.get(1), u.get(1), -f.get(1), 0.0f),
+	                                new Vector4f(s.get(2), u.get(2), -f.get(2), 0.0f),
+	                                new Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
+
+	    return M .mul( translate((Vector3f)eye.mul(-1.0f)));
 	}
 
 
