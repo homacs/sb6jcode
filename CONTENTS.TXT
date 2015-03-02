@@ -49,6 +49,6 @@ Chapter II: In Depth
 		The Base Vertex							<TODO>
 		Combining Geometry using Primitive Restart <TODO>
 	    Instancing								grass
-	    
+	    Getting Your Data Automatically			instancedattribs
 	    
 	    

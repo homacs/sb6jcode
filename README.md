@@ -14,8 +14,8 @@ at https://github.com/openglsuperbible/sb6code using
       http://openglsuperbible.com/files/sb6media_2013_11_10.zip
       (respectively http://www.openglsuperbible.com/example-code/ 
       if the link is broken)
-    - The LWJGL library used is located in the lib directory of 
-      the repository.
+  - The LWJGL library used is located in the lib directory of 
+    the repository.
 
 ## Eclipse Project Settings
 The project settings contained in the repository are configured 

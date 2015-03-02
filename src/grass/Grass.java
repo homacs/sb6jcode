@@ -21,7 +21,7 @@ import sb6.vmath.Vector3f;
 
 
 /**
- * Java implementation of indexedcube.cpp
+ * Java implementation of grass.cpp
  * 
  * @author homac
  *
@@ -217,7 +217,7 @@ public class Grass extends Application {
 	
 	@Override
 	protected void render(double currentTime) {
-		currentTime = 1.0;
+
         float t = (float)currentTime * 0.02f;
         float r = 550.0f;
 
