@@ -6,10 +6,8 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL32.*;
 import static org.lwjgl.opengl.GL40.*;
-
-
-import sb6.Application;
-import sb6.Shader;
+import sb6.application.Application;
+import sb6.shader.Shader;
 
 public class TesselatedGsTri extends Application {
 	private int program;

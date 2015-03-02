@@ -5,10 +5,8 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL40.*;
-
-
-import sb6.Application;
-import sb6.Shader;
+import sb6.application.Application;
+import sb6.shader.Shader;
 
 public class TesselatedTri extends Application {
 	private int program;

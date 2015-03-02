@@ -11,12 +11,11 @@ import static org.lwjgl.opengl.GL42.*; // textures
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-
 import org.lwjgl.BufferUtils;
 
-import sb6.Application;
 import sb6.GLAPIHelper;
-import sb6.Shader;
+import sb6.application.Application;
+import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 
 public class BasicFBO extends Application {

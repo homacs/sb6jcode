@@ -8,7 +8,7 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
 
-import sb6.Application;
+import sb6.application.Application;
 
 
 /**

@@ -12,12 +12,12 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
-import sb6.Application;
 import sb6.BufferUtilsHelper;
 import sb6.GLAPIHelper;
 import sb6.GLUniformBlock;
 import sb6.MemoryUtilHelper;
-import sb6.Shader;
+import sb6.application.Application;
+import sb6.shader.Shader;
 
 
 /**
@@ -309,8 +309,6 @@ public class SingleTriUBO extends Application {
 		//
 		
 		// create a buffer object and submit the data we have already prepared in 'buffer'
-		// TODO: this code is yet experimental, we do not know, whether we have to create 
-		//       the buffer object ourself or OpenGL already created one during program linking
 		ubo = glGenBuffers();
 		glBindBuffer(GL_UNIFORM_BUFFER, ubo);
 		glBufferData(GL_UNIFORM_BUFFER, buffer, GL_STATIC_DRAW);

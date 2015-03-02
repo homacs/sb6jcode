@@ -3,7 +3,7 @@ package sb6;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindBufferBase;
+import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL31.*;
 
 import java.nio.ByteBuffer;
@@ -11,10 +11,8 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 /**
- * This class needs a whole lot work!
- * Provides an abstraction layer to Uniform Blocks
- * @author homac
- *
+ * This was an attempt to hide the whole uniform block handling code
+ * behind an interface. This class still needs a whole lot more work!
  */
 public class GLUniformBlock {
 	
@@ -90,11 +88,10 @@ public class GLUniformBlock {
 		buffer = BufferUtils.createByteBuffer(buffer_size); // 4k (max 64k)
 
 		// create a buffer object
-		// TODO: release buffer object somewhere
 		uniformBufferObject = glGenBuffers();
 		glBindBuffer(GL_UNIFORM_BUFFER, uniformBufferObject);
-		// TODO: we might need a different buffer object type than STATIC_DRAW!
-		glBufferData(GL_UNIFORM_BUFFER, buffer_size, GL_STATIC_DRAW);
+		// TODO: buffer object usage type can vary!
+		glBufferData(GL_UNIFORM_BUFFER, buffer_size, GL_DYNAMIC_DRAW);
 		
 		// first retrieve the uniform block index
 		uniformBlockIndex = glGetUniformBlockIndex(program, name);

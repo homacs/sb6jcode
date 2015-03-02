@@ -1,4 +1,4 @@
-package sb6;
+package sb6.application;
 
 import java.nio.ByteBuffer;
 
@@ -6,6 +6,7 @@ import org.lwjgl.LWJGLUtil;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
+import sb6.GLAPIHelper;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*; // for constants like GL_TRUE
 import static org.lwjgl.system.MemoryUtil.*;

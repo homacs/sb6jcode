@@ -5,14 +5,14 @@ import java.nio.ByteBuffer;
 import java.util.Random;
 
 
-import sb6.Application;
 
 
 
 import sb6.BufferUtilsHelper;
-import sb6.MathHelper;
-import sb6.Shader;
+import sb6.application.Application;
 import sb6.ktx.KTX;
+import sb6.shader.Shader;
+import sb6.vmath.MathHelper;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;

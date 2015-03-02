@@ -1,4 +1,4 @@
-package sb6;
+package sb6.shader;
 
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
@@ -32,6 +32,8 @@ import java.util.StringTokenizer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
+
+import sb6.FileSystem;
 
 public class Shader {
 

@@ -1,4 +1,4 @@
-package sb6;
+package sb6.application;
 
 import static org.lwjgl.LWJGLUtil.log;
 import static org.lwjgl.opengl.AMDDebugOutput.*;

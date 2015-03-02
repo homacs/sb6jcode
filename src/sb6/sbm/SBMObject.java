@@ -1,4 +1,4 @@
-package sb6;
+package sb6.sbm;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*; // buffer management
@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLUtil;
+
+import sb6.BufferUtilsHelper;
+import sb6.application.Application;
 
 public class SBMObject {
 	private static final int MAX_SUB_OBJECTS = 256;

@@ -6,6 +6,9 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
 
+/**
+ * This class mainly provides a cache for native I/O buffers.
+ */
 public class GLAPIHelper {
 	static class APICache {
 		FloatBuffer scalarf = BufferUtils.createFloatBuffer(1);

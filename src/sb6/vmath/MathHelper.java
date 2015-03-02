@@ -1,4 +1,4 @@
-package sb6;
+package sb6.vmath;
 
 public class MathHelper {
 

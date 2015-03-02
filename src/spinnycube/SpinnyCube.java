@@ -7,13 +7,12 @@ import static org.lwjgl.opengl.GL30.*;
 
 import java.nio.FloatBuffer;
 
-
 import org.lwjgl.system.MemoryUtil;
 
-import sb6.Application;
 import sb6.BufferUtilsHelper;
 import sb6.GLAPIHelper;
-import sb6.Shader;
+import sb6.application.Application;
+import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 
 

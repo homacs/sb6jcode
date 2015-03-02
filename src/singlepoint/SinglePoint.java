@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
 
-import sb6.Application;
+import sb6.application.Application;
 
 public class SinglePoint extends Application {
 
