@@ -91,6 +91,17 @@ public class MatrixNxMf
 		}
 	}
 
+	public void getColumn(int column, float[] values) {
+		assert(values.length == rows);
+		System.arraycopy(data, column*rows, values, 0, rows);
+	}
+	
+	public void getRow(int row, float[] values) {
+		assert(values.length == columns);
+		for (int c = 0; c < columns; c++) {
+			values[c] = get(row, c);
+		}
+	}
 
 	public float[] getData() {
 		return data;

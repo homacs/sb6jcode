@@ -15,6 +15,12 @@ public class VectorNf {
         }
 	}
 
+	public float[] getData() {
+		return data;
+	}
+
+
+	
 	protected static float[] _sub(float[] v1, float[] v2) {
 		float[] result = new float[v1.length];
         for (int n = 0; n < v1.length; n++)
@@ -63,6 +69,10 @@ public class VectorNf {
 		return data[i];
 	}
 
+	public void set(int i, float value) {
+		data [i] = value;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuffer s = new StringBuffer();
