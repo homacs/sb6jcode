@@ -1,4 +1,4 @@
-#version 430 core
+#version 410 core
 
 // This input vector contains the vertex position in xyz, and the
 // mass of the vertex in w

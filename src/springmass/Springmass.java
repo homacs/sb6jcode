@@ -69,11 +69,11 @@ import sb6.shader.Program;
 import sb6.shader.Shader;
 
 public class Springmass extends Application {
-	static int POSITION_A;
-	static int POSITION_B;
-	static int VELOCITY_A;
-	static int VELOCITY_B;
-	static int CONNECTION;
+	static int POSITION_A = 0;
+	static int POSITION_B = 1;
+	static int VELOCITY_A = 2;
+	static int VELOCITY_B = 3;
+	static int CONNECTION = 4;
 
     static int POINTS_X            = 50;
     static int POINTS_Y            = 50;
@@ -169,7 +169,7 @@ public class Springmass extends Application {
                         connection_vectors.put(n*4 + 2, n + 1);
 
                     if (j != (POINTS_Y - 1))
-                        connection_vectors.put(n*4 + 3, n + POINTS_X);
+                    	connection_vectors.put(n*4 + 3, n + POINTS_X);
                 }
                 n++;
             }
@@ -222,7 +222,8 @@ public class Springmass extends Application {
         ByteBuffer pointer = glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0, lines * 2 * BufferUtilsHelper.SIZEOF_INTEGER, GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 
         IntBuffer e = pointer.asIntBuffer();
-        
+        // TODO: need this?
+        e.rewind();
         for (j = 0; j < POINTS_Y; j++)  
         {
             for (i = 0; i < POINTS_X - 1; i++)
@@ -237,11 +238,9 @@ public class Springmass extends Application {
             for (j = 0; j < POINTS_Y - 1; j++)
             {
                 e.put(i + j * POINTS_X);
-                e.put(1 + i + j * POINTS_X);
+                e.put(POINTS_X + i + j * POINTS_X);
             }
         }
-        // TODO: need this?
-        e.rewind();
         
         glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);	
     }
@@ -289,7 +288,7 @@ public class Springmass extends Application {
         }
 
         //
-        // Reenable rasterisation so we can produce a visual output 
+        // Reenable rasterisation so we can produce a visible output 
         // in the following pass
         //
         glDisable(GL_RASTERIZER_DISCARD);
@@ -366,7 +365,7 @@ public class Springmass extends Application {
         vs = Shader.load(getMediaPath() + "/shaders/springmass/render.vs.glsl", GL_VERTEX_SHADER);
         fs = Shader.load(getMediaPath() + "/shaders/springmass/render.fs.glsl", GL_FRAGMENT_SHADER);
 
-        Program.link_from_shaders(new int[]{vs, fs}, m_render_program != 0, true);
+        m_render_program = Program.link_from_shaders(new int[]{vs, fs}, m_render_program != 0, true);
     }
 
     public static void main (String[] args) {
