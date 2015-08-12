@@ -52,5 +52,6 @@ Chapter II: In Depth
 	    Instancing								grass
 	    Getting Your Data Automatically			instancedattribs
 	    Indirect Draws							multidrawindirect
-	    
+	3. Storing Transformed Vertices				springmass
+		
 	    

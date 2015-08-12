@@ -13,6 +13,7 @@ import org.lwjgl.system.MemoryUtil;
 import static sb6.vmath.MathHelper.*;
 import sb6.BufferUtilsHelper;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 
@@ -93,7 +94,7 @@ public class IndexedCube extends Application {
         glAttachShader(program, fs);
 
         glLinkProgram(program);
-        Shader.checkLinkerResult(program);
+        Program.checkLinkerResult(program);
         
         
         mv_location = glGetUniformLocation(program, "mv_matrix");

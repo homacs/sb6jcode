@@ -2,6 +2,7 @@ package sb6;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -14,6 +15,9 @@ public class BufferUtilsHelper {
 	public static final int SIZEOF_LONG = Long.SIZE/8;
 	public static final int SIZEOF_FLOAT = Float.SIZE/8;
 	public static final int SIZEOF_DOUBLE = Double.SIZE/8;
+	
+	/** Null pointer in case there is no function signature which supports null. */
+	public static final long NULL = 0L;
 
 	
 	public static int sizeof(FloatBuffer buffer) {
@@ -87,6 +91,19 @@ public class BufferUtilsHelper {
 	 */
 	public static ShortBuffer createShortBuffer(short[] data) {
 		ShortBuffer sb = BufferUtils.createShortBuffer(data.length);
+		sb.put(data);
+		sb.rewind();
+		return sb;
+	}
+
+	/**
+	 * Returns a int buffer of length data.length initialised with data.
+	 * Iterator of the created buffer refers to the first element.
+	 * @param data 
+	 * @return
+	 */
+	public static IntBuffer createIntBuffer(int[] data) {
+		IntBuffer sb = BufferUtils.createIntBuffer(data.length);
 		sb.put(data);
 		sb.rewind();
 		return sb;

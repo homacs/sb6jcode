@@ -15,6 +15,7 @@ import static sb6.vmath.MathHelper.*;
 import sb6.BufferUtilsHelper;
 import sb6.application.Application;
 import sb6.ktx.KTX;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 import sb6.vmath.Vector3f;
@@ -193,7 +194,7 @@ public class Grass extends Application {
         glAttachShader(grass_program, grass_fs);
 
         glLinkProgram(grass_program);
-        Shader.checkLinkerResult(grass_program);
+        Program.checkLinkerResult(grass_program);
         glDeleteShader(grass_fs);
         glDeleteShader(grass_vs);
 

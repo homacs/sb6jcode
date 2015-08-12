@@ -20,6 +20,11 @@ public class Vector3f extends VectorNf {
 	}
 
 
+	public Vector3f(float f) {
+		super(f);
+	}
+
+
 	public static Vector3f sub(Vector3f v1, Vector3f v2) {
 		return new Vector3f(VectorNf._sub(v1.data,v2.data));
 	}

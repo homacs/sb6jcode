@@ -11,6 +11,7 @@ import java.nio.FloatBuffer;
 
 import sb6.BufferUtilsHelper;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 
 
@@ -138,7 +139,7 @@ public class InstancedAttribs extends Application {
         glAttachShader(square_program, square_fs);
 
         glLinkProgram(square_program);
-        Shader.checkLinkerResult(square_program);
+        Program.checkLinkerResult(square_program);
         
         glDeleteShader(square_vs);
         glDeleteShader(square_fs);

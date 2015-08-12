@@ -6,6 +6,7 @@ package tunnel;
 
 import sb6.application.Application;
 import sb6.ktx.KTX;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 import static org.lwjgl.opengl.GL11.*;
@@ -95,7 +96,7 @@ public class Tunnel extends Application {
         glDeleteShader(vs);
         glDeleteShader(fs);
 
-        Shader.checkLinkerResult(render_prog);
+        Program.checkLinkerResult(render_prog);
         
         uniforms.mvp = glGetUniformLocation(render_prog, "mvp");
         uniforms.offset = glGetUniformLocation(render_prog, "offset");

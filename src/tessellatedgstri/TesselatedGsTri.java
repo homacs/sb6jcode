@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL32.*;
 import static org.lwjgl.opengl.GL40.*;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 
 public class TesselatedGsTri extends Application {
@@ -163,7 +164,7 @@ public class TesselatedGsTri extends Application {
 		glLinkProgram(program);
 		glValidateProgram(program);
 
-		Shader.checkLinkerResult(program);
+		Program.checkLinkerResult(program);
 		
 		// Delete the shaders as the program has them now
 		glDeleteShader(vs);

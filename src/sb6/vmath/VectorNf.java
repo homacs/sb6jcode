@@ -8,6 +8,13 @@ public class VectorNf {
 		data = fs;
 	}
 
+	public VectorNf(float f) {
+        for (int n = 0; n < data.length; n++)
+        {
+            data[n] = f;
+        }
+	}
+
 	protected static float[] _sub(float[] v1, float[] v2) {
 		float[] result = new float[v1.length];
         for (int n = 0; n < v1.length; n++)

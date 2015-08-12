@@ -9,6 +9,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 
 
@@ -89,7 +90,7 @@ public class InterfaceBlock extends Application {
         glAttachShader(program, fs);
 
         glLinkProgram(program);
-        Shader.checkLinkerResult(program);
+        Program.checkLinkerResult(program);
         
 		glDeleteShader(vs);
 		glDeleteShader(fs);

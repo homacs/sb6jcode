@@ -17,6 +17,7 @@ import sb6.GLAPIHelper;
 import sb6.GLUniformBlock;
 import sb6.MemoryUtilHelper;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 
 
@@ -128,7 +129,7 @@ public class SingleTriUBO extends Application {
 
         glLinkProgram(program);
 		glValidateProgram(program);
-        Shader.checkLinkerResult(program);
+		Program.checkLinkerResult(program);
 		glDeleteShader(vs);
 		glDeleteShader(fs);
 		

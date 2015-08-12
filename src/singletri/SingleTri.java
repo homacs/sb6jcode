@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 
 public class SingleTri extends Application {
@@ -96,7 +97,7 @@ public class SingleTri extends Application {
 		glLinkProgram(program);
 		glValidateProgram(program);
 
-		Shader.checkLinkerResult(program);
+		Program.checkLinkerResult(program);
 		
 		// Delete the shaders as the program has them now
 		glDeleteShader(vertex_shader);

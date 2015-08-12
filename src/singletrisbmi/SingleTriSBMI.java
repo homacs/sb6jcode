@@ -11,6 +11,7 @@ import sb6.BufferUtilsHelper;
 import sb6.GLAPIHelper;
 import sb6.MemoryUtilHelper;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 
 
@@ -82,7 +83,7 @@ public class SingleTriSBMI extends Application {
 
         glLinkProgram(program);
 		glValidateProgram(program);
-        Shader.checkLinkerResult(program);
+		Program.checkLinkerResult(program);
 		glDeleteShader(vs);
 		glDeleteShader(fs);
 		

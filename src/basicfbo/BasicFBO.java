@@ -15,6 +15,7 @@ import org.lwjgl.BufferUtils;
 
 import sb6.GLAPIHelper;
 import sb6.application.Application;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 
@@ -110,7 +111,7 @@ public class BasicFBO extends Application {
         glAttachShader(program1, fs);
 
         glLinkProgram(program1);
-        Shader.checkLinkerResult(program1);
+        Program.checkLinkerResult(program1);
 
         glDeleteShader(vs);
         glDeleteShader(fs);
@@ -131,7 +132,7 @@ public class BasicFBO extends Application {
         glAttachShader(program2, fs);
 
         glLinkProgram(program2);
-        Shader.checkLinkerResult(program2);
+        Program.checkLinkerResult(program2);
 
         glDeleteShader(vs);
         glDeleteShader(fs);

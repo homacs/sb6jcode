@@ -237,6 +237,7 @@ public abstract class Application extends GLAPIHelper{
 
 	protected abstract void startup() throws Throwable;
 
+	/** called from main loop to render the next frame */
 	protected abstract void render(double currentTime) throws Throwable;
 	
 	protected abstract void shutdown() throws Throwable;

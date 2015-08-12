@@ -8,9 +8,11 @@ import java.util.Random;
 
 
 
+
 import sb6.BufferUtilsHelper;
 import sb6.application.Application;
 import sb6.ktx.KTX;
+import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.MathHelper;
 import static org.lwjgl.opengl.GL11.*;
@@ -123,7 +125,7 @@ public class AlienRain extends Application {
         glAttachShader(render_prog, fs);
         glLinkProgram(render_prog);
 
-        Shader.checkLinkerResult(render_prog);
+        Program.checkLinkerResult(render_prog);
         
         glDeleteShader(vs);
         glDeleteShader(fs);
