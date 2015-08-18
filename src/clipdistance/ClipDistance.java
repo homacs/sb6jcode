@@ -2,41 +2,30 @@ package clipdistance;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR;
 import static org.lwjgl.opengl.GL11.GL_DEPTH;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
+import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
+import static org.lwjgl.opengl.GL20.glDeleteProgram;
+import static org.lwjgl.opengl.GL20.glGetUniformLocation;
+import static org.lwjgl.opengl.GL20.glUniform4;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4;
+import static org.lwjgl.opengl.GL20.glUseProgram;
+import static org.lwjgl.opengl.GL30.GL_CLIP_DISTANCE0;
+import static org.lwjgl.opengl.GL30.GL_CLIP_DISTANCE1;
+import static sb6.vmath.MathHelper.cosf;
+import static sb6.vmath.MathHelper.sinf;
+
+import java.io.IOException;
+
 import sb6.BufferUtilsHelper;
 import sb6.GLAPIHelper;
 import sb6.application.Application;
 import sb6.sbm.SBMObject;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*; // buffer management
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL32.*; // framebuffer texture
-import static org.lwjgl.opengl.GL42.*; // textures
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL31.*;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-
-import org.lwjgl.BufferUtils;
-
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-
-import org.lwjgl.BufferUtils;
-
-import sb6.GLAPIHelper;
-import sb6.application.Application;
 import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 import sb6.vmath.Vector4f;
-import sb6.vmath.VectorNf;
-import static sb6.vmath.MathHelper.*;
 
 public class ClipDistance extends Application {
 	
@@ -51,6 +40,7 @@ public class ClipDistance extends Application {
 
 	public ClipDistance() {
 		super("OpenGL SuperBible - Clip Distance");
+		paused = false;
 		
 		init();
 	}

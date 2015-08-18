@@ -21,7 +21,7 @@ public class Vector3f extends VectorNf {
 
 
 	public Vector3f(float f) {
-		super(f);
+		super(f, 3);
 	}
 
 

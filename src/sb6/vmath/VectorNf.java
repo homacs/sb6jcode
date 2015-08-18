@@ -8,7 +8,8 @@ public class VectorNf {
 		data = fs;
 	}
 
-	public VectorNf(float f) {
+	public VectorNf(float f, int len) {
+		data = new float[len];
         for (int n = 0; n < data.length; n++)
         {
             data[n] = f;

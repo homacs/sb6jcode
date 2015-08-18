@@ -53,5 +53,11 @@ Chapter II: In Depth
 	    Getting Your Data Automatically			instancedattribs
 	    Indirect Draws							multidrawindirect
 	3. Storing Transformed Vertices				springmass
-		
+	4. Clipping									clipdistance
+8 Primitive Processing
+	1. Tesselation
+		Tessellation Primitive Modes			tessmodes
+		Tessellation Subdivision Modes			tesssubdivmodes
+		Tessellation Example - Terrain Rend.    dispmap
+	
 	    
