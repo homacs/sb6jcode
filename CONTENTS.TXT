@@ -59,5 +59,6 @@ Chapter II: In Depth
 		Tessellation Primitive Modes			tessmodes
 		Tessellation Subdivision Modes			tesssubdivmodes
 		Tessellation Example - Terrain Rend.    dispmap
+		Tessellation Example — Cubic Bézier P.  cubicbezier
 	
 	    

@@ -14,6 +14,27 @@ out TCS_OUT
 
 uniform mat4 mvp_matrix;
 
+//
+// hm20150819: added experimental feature
+//
+// This factor allows to increase accuracy of displacement
+// A low factor for example tends to cut the top of a hill 
+// if the vertices lie around it while it renders the tip 
+// if a vertex lies on top of it. You can see these effects 
+// if you switch to wired mode (hit 'W').
+// 
+float general_factor = 16.0f * 64.0;
+
+
+//
+// hm20150819: added experimental feature
+//
+// This factor applies LOD decrease for polygones further 
+// away from the viewer.
+// Interval 0.0 = LOD off, 1.0 = full LOD application
+// 
+float lod_factor = 0.95;
+
 void main(void)
 {
     if (gl_InvocationID == 0)
@@ -26,9 +47,15 @@ void main(void)
         p1 /= p1.w;
         p2 /= p2.w;
         p3 /= p3.w;
-        if (p0.z <= 0.0 ||
-            p1.z <= 0.0 ||
-            p2.z <= 0.0 ||
+        
+        //
+        // hm20150819: added
+        // I changed this to clip only if the face is entirely 
+        // outside the viewport.
+        //
+        if (p0.z <= 0.0 &&
+            p1.z <= 0.0 &&
+            p2.z <= 0.0 &&
             p3.z <= 0.0)
          {
               gl_TessLevelOuter[0] = 0.0;
@@ -38,10 +65,10 @@ void main(void)
          }
          else
          {
-            float l0 = length(p2.xy - p0.xy) * 16.0 + 1.0;
-            float l1 = length(p3.xy - p2.xy) * 16.0 + 1.0;
-            float l2 = length(p3.xy - p1.xy) * 16.0 + 1.0;
-            float l3 = length(p1.xy - p0.xy) * 16.0 + 1.0;
+            float l0 = length(p2.xy - p0.xy) * general_factor * (1.0 - lod_factor * (min(p2.z, p0.z))) + 1.0;
+            float l1 = length(p3.xy - p2.xy) * general_factor * (1.0 - lod_factor * (min(p3.z, p2.z))) + 1.0;
+            float l2 = length(p3.xy - p1.xy) * general_factor * (1.0 - lod_factor * (min(p3.z, p1.z))) + 1.0;
+            float l3 = length(p1.xy - p0.xy) * general_factor * (1.0 - lod_factor * (min(p1.z, p0.z))) + 1.0;
             gl_TessLevelOuter[0] = l0;
             gl_TessLevelOuter[1] = l1;
             gl_TessLevelOuter[2] = l2;
