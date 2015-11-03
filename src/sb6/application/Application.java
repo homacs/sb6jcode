@@ -279,7 +279,29 @@ public abstract class Application extends GLAPIHelper{
 			error(message);
 			break;
 		default:
-			warn(message);
+			switch(severity) {
+			case GL_DEBUG_SEVERITY_HIGH:
+				/* GL_DEBUG_SEVERITY_HIGH_ARB */
+				/* GL_DEBUG_SEVERITY_HIGH_AMD */
+				fatal(message);
+				break;
+			case GL_DEBUG_SEVERITY_MEDIUM:
+				/* GL_DEBUG_SEVERITY_MEDIUM_ARB */
+				/* GL_DEBUG_SEVERITY_MEDIUM_AMD */
+				error(message);
+				break;
+			case GL_DEBUG_SEVERITY_LOW:
+				/* GL_DEBUG_SEVERITY_LOW_ARB */
+				warn(message);
+				break;
+			case GL_DEBUG_SEVERITY_NOTIFICATION:
+				/* GL_DEBUG_SEVERITY_MEDIUM_AMD */
+				/* GL_DEBUG_SEVERITY_LOW_AMD */
+				if(DEBUG) info(message);
+				break;
+			default:
+				warn(message);
+			}
 		}
 	}
 
