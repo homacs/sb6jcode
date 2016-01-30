@@ -29,8 +29,8 @@ import sb6.vmath.Vector3f;
  * Java implementation of multidrawindirect.cpp.
  * 
  * Access to the data structure DrawArrasIndirectCommand
- * has been implemented in an facet class (see 
- * {@link DrawArraysIndirectCommandFacet}).
+ * has been implemented in a facade class (see 
+ * {@link DrawArraysIndirectCommandFacade}).
  * <br/><br/>
  * <em>Note:</em> My GL driver complains about the vertex array 
  * buffer and index buffer to be mapped to the client 
@@ -99,18 +99,18 @@ public class MultiDrawIndirect extends Application {
 	    System.out.println("indirect_draw_buffer: " + indirect_draw_buffer);
 	    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_draw_buffer);
 	    glBufferData(GL_DRAW_INDIRECT_BUFFER,
-	                 NUM_DRAWS * DrawArraysIndirectCommandFacet.sizeof(),
+	                 NUM_DRAWS * DrawArraysIndirectCommandFacade.sizeof(),
 	                 GL_STATIC_DRAW);
 
 	    ByteBuffer ptr = glMapBufferRange(GL_DRAW_INDIRECT_BUFFER,
                 0,
-                NUM_DRAWS * DrawArraysIndirectCommandFacet.sizeof(),
+                NUM_DRAWS * DrawArraysIndirectCommandFacade.sizeof(),
                 GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
-	    DrawArraysIndirectCommandFacet cmd = new DrawArraysIndirectCommandFacet(ptr, 0);
+	    DrawArraysIndirectCommandFacade cmd = new DrawArraysIndirectCommandFacade(ptr, 0);
 
 	    for (i = 0; i < NUM_DRAWS; i++)
 	    {
-	    	cmd.offset(i * (int)DrawArraysIndirectCommandFacet.sizeof());
+	    	cmd.offset(i * (int)DrawArraysIndirectCommandFacade.sizeof());
 	    	
 	        object.get_sub_object_info(i % object.get_sub_object_count(), cmd);
 	        cmd.setPrimCount(1);

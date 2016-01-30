@@ -6,7 +6,7 @@ import sb6.BufferUtilsHelper;
 import sb6.sbm.SBMObject.SBMSubObjectInfo;
 
 /**
- * This class implements a facet for a data structure stored as raw data in some
+ * This class implements a facede for a data structure stored as raw data in some
  * region of memory outside of the virtual machine. The data structure has the 
  * following layout:
  * <pre>
@@ -18,16 +18,16 @@ import sb6.sbm.SBMObject.SBMSubObjectInfo;
  * };
  * </pre>
  * 
- * The facet just provides a view on that data structure through getter and setter 
+ * The facade just provides a view on that data structure through getter and setter 
  * methods which write or read the member variables in the referenced memory. The 
- * facet uses a ByteBuffer object to realise read/write native I/O access when 
+ * facade uses a ByteBuffer object to realise read/write native I/O access when 
  * getter and setter methods are called.
  * 
  * @author homac
  * @see ByteBuffer
  *
  */
-public class DrawArraysIndirectCommandFacet implements SBMSubObjectInfo {
+public class DrawArraysIndirectCommandFacade implements SBMSubObjectInfo {
 	/* Date is stored elsewhere and we have just a view on it.
 	 * 
 	 * Virtually this class provides access to the following members:
@@ -55,10 +55,10 @@ public class DrawArraysIndirectCommandFacet implements SBMSubObjectInfo {
     }
     
     /**
-     * Initialises this facet with the given ptr as reference on the memory region 
+     * Initialises this facade with the given ptr as reference on the memory region 
      * with the actual data. The offset specifies the position inside the memory 
      * region which contains the first member variable of the data structure represented 
-     * by this facet. This ptr might be received through BufferUtils.createByteBuffer() or 
+     * by this facade. This ptr might be received through BufferUtils.createByteBuffer() or 
      * glMapBuffer().
      * 
      * Offset can be used to iterate through an array of DrawArraysIndirectCommand objects.
@@ -68,7 +68,7 @@ public class DrawArraysIndirectCommandFacet implements SBMSubObjectInfo {
      * @see #offset()
      * @see #offset(int)
      */
-    public DrawArraysIndirectCommandFacet(ByteBuffer ptr, int offset) {
+    public DrawArraysIndirectCommandFacade(ByteBuffer ptr, int offset) {
 		this.ptr = ptr;
 		this.offset = offset;
     }

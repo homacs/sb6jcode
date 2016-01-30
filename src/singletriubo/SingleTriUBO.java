@@ -181,12 +181,12 @@ public class SingleTriUBO extends Application {
 			provideDataToUniformBlock();
 		} else {
 			// alternative abstract interface
-			setupUniformBlockFacet();
+			setupUniformBlockFacade();
 		}
 		
 	}
 
-	private void setupUniformBlockFacet() {
+	private void setupUniformBlockFacade() {
 		uniformBlock = new GLUniformBlock(program, 0, "TransformBlock", new String[]{
 					"scale",
 					"translation",
