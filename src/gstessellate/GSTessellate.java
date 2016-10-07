@@ -85,6 +85,23 @@ public class GSTessellate extends Application {
             "                                                                              \n" +
             "void main(void)                                                               \n" +
             "{                                                                             \n" +
+            "    // Task:                                                                  \n" +
+            "    // Subdivide each face (a,b,c) into four faces like this:                 \n" +
+            "    //                   b                                                    \n" +
+            "    //                  /\\                                                   \n" +
+            "    //                 /  \\                                                  \n" +
+            "    //               d/____\\e                                                \n" +
+            "    //               /\\    /\\                                                \n" +
+            "    //              /  \\  /  \\                                               \n" +
+            "    //             /____\\/____\\                                              \n" +
+            "    //            a      f      c                                             \n" +
+            "    //                                                                        \n" +
+            "    // Then move (a,b,c) and (d,e,f) with factor stretch in                   \n" +
+            "    // opposite directions from the center of the object (tetrahedron).       \n" +
+            "    // Since geometry shader works in object space, moving a vertex           \n" +
+            "    // away from or towards the object center is just multiplying it by a factor. \n" +
+            "    //                                                                        \n" +
+            "                                                                              \n" +
             "    int n;                                                                    \n" +
             "    vec3 a = gl_in[0].gl_Position.xyz;                                        \n" +
             "    vec3 b = gl_in[1].gl_Position.xyz;                                        \n" +
@@ -97,7 +114,7 @@ public class GSTessellate extends Application {
             "    a *= (2.0 - stretch);                                                     \n" +
             "    b *= (2.0 - stretch);                                                     \n" +
             "    c *= (2.0 - stretch);                                                     \n" +
-
+            "                                                                              \n" +
             "    make_face(a, d, f);                                                       \n" +
             "    make_face(d, b, e);                                                       \n" +
             "    make_face(e, c, f);                                                       \n" +
@@ -131,6 +148,10 @@ public class GSTessellate extends Application {
         mvp_location = glGetUniformLocation(program, "mvpMatrix");
         stretch_location = glGetUniformLocation(program, "stretch");
 
+        // Tetrahedron is a pyramid with a triangle base (not square as usually)
+        // Thus, a tetrahedron has four faces and four vertices.
+        
+        // the four vertices
         FloatBuffer tetrahedron_verts = BufferUtilsHelper.createFloatBuffer(new float[]
         {
              0.000f,  0.000f,  1.000f,
@@ -139,6 +160,7 @@ public class GSTessellate extends Application {
             -0.471f, -0.816f, -0.333f
         });
 
+        // .. and the four faces (as indices on the vertices above)
         ShortBuffer tetrahedron_indices = BufferUtilsHelper.createShortBuffer(new short[]
         {
             0, 1, 2,
@@ -169,7 +191,8 @@ public class GSTessellate extends Application {
 
     protected void render(double currentTime)
     {
-        float f = (float)currentTime;
+    	float speed = 0.5f;
+        float f = (float)currentTime * speed;
 
         glViewport(0, 0, info.windowWidth, info.windowHeight);
         glClearBuffer4f(GL_COLOR, 0, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -177,13 +200,13 @@ public class GSTessellate extends Application {
 
         glUseProgram(program);
 
-        Matrix4x4f proj_matrix = Matrix4x4f.perspective(50.0f,
+        Matrix4x4f proj_matrix = Matrix4x4f.perspective(20.0f,
                                                      (float)info.windowWidth / (float)info.windowHeight,
                                                      0.1f,
                                                      1000.0f);
         Matrix4x4f mv_matrix = Matrix4x4f.translate(0.0f, 0.0f, -10.5f)
-        		.mul(Matrix4x4f.rotate((float)currentTime * 71.0f, 0.0f, 1.0f, 0.0f))
-        		.mul(Matrix4x4f.rotate((float)currentTime * 10.0f, 1.0f, 0.0f, 0.0f))
+        		.mul(Matrix4x4f.rotate((float)f * 71.0f, 0.0f, 1.0f, 0.0f))
+        		.mul(Matrix4x4f.rotate((float)f * 10.0f, 1.0f, 0.0f, 0.0f))
         ;
 
         glUniformMatrix4(mvp_location, false, proj_matrix.mul(mv_matrix).toFloatBuffer());
