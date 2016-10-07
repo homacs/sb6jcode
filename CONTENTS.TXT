@@ -60,5 +60,6 @@ Chapter II: In Depth
 		Tessellation Subdivision Modes			tesssubdivmodes
 		Tessellation Example - Terrain Rend.    dispmap
 		Tessellation Example — Cubic Bézier P.  cubicbezier
-	
+	2. Geometry Shaders
+	    Discarding Geometry						gsculling
 	    
