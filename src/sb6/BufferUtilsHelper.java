@@ -24,6 +24,11 @@ public class BufferUtilsHelper {
 		return buffer.capacity() * SIZEOF_FLOAT;
 	}
 
+	public static int sizeof(ShortBuffer buffer) {
+		return buffer.capacity() * SIZEOF_SHORT;
+	}
+
+
 
 	public static String getFixedLenString(ByteBuffer data, int length) {
 		byte buf[] = new byte[length];
@@ -108,6 +113,7 @@ public class BufferUtilsHelper {
 		sb.rewind();
 		return sb;
 	}
+
 
 
 
