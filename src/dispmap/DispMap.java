@@ -41,6 +41,8 @@ import static sb6.vmath.MathHelper.sinf;
 
 import java.io.IOException;
 
+import org.lwjgl.opengl.GL11;
+
 import sb6.GLAPIHelper;
 import sb6.application.Application;
 import sb6.ktx.KTX;
@@ -90,8 +92,6 @@ public class DispMap extends Application {
 
         glPatchParameteri(GL_PATCH_VERTICES, 4);
 
-        glEnable(GL_CULL_FACE);
-
         tex_displacement = KTX.load(getMediaPath() + "/textures/terragen1.ktx");
         glActiveTexture(GL_TEXTURE1);
         tex_color = KTX.load(getMediaPath() + "/textures/terragen_color.ktx");
@@ -135,10 +135,13 @@ public class DispMap extends Application {
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
 
-        if (wireframe)
+        if (wireframe) {
+        	GL11.glDisable(GL_CULL_FACE);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        else
+        } else {
+            glEnable(GL_CULL_FACE);
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
         glDrawArraysInstanced(GL_PATCHES, 0, 4, 64 * 64);
 	}
 

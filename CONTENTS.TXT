@@ -62,6 +62,8 @@ Chapter II: In Depth
 		Tessellation Example - Cubic Bézier P.  cubicbezier
 	2. Geometry Shaders
 	    Discarding Geometry	...					gsculling
+		Modifying Geometry ...					objectexploder
         Generating Geometry ...	    			gstessellate
         Changing the Primitive Type ...			normalviewer
-        
+        Rendering Quads ...						gsquads
+        Multiple Viewport Transformations       multiviewport

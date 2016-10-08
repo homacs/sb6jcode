@@ -139,10 +139,18 @@ public class MatrixNxMf
 	}
 
 	public FloatBuffer toFloatBuffer() {
-		apiBuffer.put(data);
+		toFloatBuffer(apiBuffer);
 		apiBuffer.rewind();
 		return apiBuffer;
 	}
 
+	public void toFloatBuffer(FloatBuffer out) {
+		out.put(data);
+	}
+	
+	
+	public void fromFloatBuffer(FloatBuffer in) {
+		in.get(data);
+	}
 	
 }

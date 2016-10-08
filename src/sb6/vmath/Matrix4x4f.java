@@ -2,6 +2,8 @@ package sb6.vmath;
 
 import static java.lang.Math.*;
 
+import sb6.BufferUtilsHelper;
+
 public class Matrix4x4f extends MatrixNxMf {
 	private float [] tmp;
 
@@ -208,7 +210,9 @@ public class Matrix4x4f extends MatrixNxMf {
 		return new Matrix4x4f(m1) .mul(m2);
 	}
 
-
+	public static long sizeof() {
+		return 16L * BufferUtilsHelper.SIZEOF_FLOAT;
+	}
 
 	
 }
