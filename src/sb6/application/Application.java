@@ -17,8 +17,6 @@ import static org.lwjgl.opengl.GL43.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 
-
-
 public abstract class Application extends GLAPIHelper{
 	
 	public static final boolean DEBUG = true;

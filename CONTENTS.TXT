@@ -63,3 +63,5 @@ Chapter II: In Depth
 	2. Geometry Shaders
 	    Discarding Geometry	...					gsculling
         Generating Geometry ...	    			gstessellate
+        Changing the Primitive Type ...			normalviewer
+        
