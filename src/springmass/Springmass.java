@@ -52,7 +52,6 @@ import static org.lwjgl.opengl.GL30.glTransformFeedbackVaryings;
 import static org.lwjgl.opengl.GL30.glVertexAttribIPointer;
 import static org.lwjgl.opengl.GL31.GL_TEXTURE_BUFFER;
 import static org.lwjgl.opengl.GL31.glTexBuffer;
-import static org.lwjgl.opengl.GL40.*;
 import static sb6.vmath.MathHelper.cosf;
 import static sb6.vmath.MathHelper.sinf;
 

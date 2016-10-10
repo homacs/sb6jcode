@@ -12,14 +12,12 @@ import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL31.*;
 import static org.lwjgl.opengl.GL32.*;
 import static org.lwjgl.opengl.GL41.*;
-import static org.lwjgl.opengl.GL42.*;
 
 public class MultiScissor extends Application {
     private int          program;
@@ -27,8 +25,6 @@ public class MultiScissor extends Application {
     private int          position_buffer;
     private int          index_buffer;
     private int          uniform_buffer;
-    private int           mv_location;
-    private int           proj_location;
 
 	public MultiScissor() {
 		super("OpenGL SuperBible - Multiple Scissors");
@@ -109,9 +105,6 @@ public class MultiScissor extends Application {
         int fs = Shader.compile(GL_FRAGMENT_SHADER, fs_source);
 
         program = Program.link(true, vs, gs, fs);
-
-        mv_location = glGetUniformLocation(program, "mv_matrix");
-        proj_location = glGetUniformLocation(program, "proj_matrix");
 
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
@@ -212,8 +205,6 @@ public class MultiScissor extends Application {
                                                      (float)info.windowWidth / (float)info.windowHeight,
                                                      0.1f,
                                                      1000.0f);
-
-        float f = (float)currentTime * 0.3f;
 
         glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniform_buffer);
         ByteBuffer bb_mv_matrix_array = glMapBufferRange(GL_UNIFORM_BUFFER,
