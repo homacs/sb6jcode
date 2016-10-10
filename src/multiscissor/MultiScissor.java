@@ -1,15 +1,4 @@
-package multiviewport;
-
-
-import sb6.BufferUtilsHelper;
-import sb6.application.Application;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL31.*;
-import static org.lwjgl.opengl.GL32.*;
-import static org.lwjgl.opengl.GL41.*;
+package multiscissor;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -17,22 +6,34 @@ import java.nio.ShortBuffer;
 
 import org.lwjgl.system.MemoryUtil;
 
+import sb6.BufferUtilsHelper;
+import sb6.application.Application;
 import sb6.shader.Program;
 import sb6.shader.Shader;
 import sb6.vmath.Matrix4x4f;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
+import static org.lwjgl.opengl.GL41.*;
+import static org.lwjgl.opengl.GL42.*;
 
-public class MultiViewport extends Application {
+public class MultiScissor extends Application {
     private int          program;
     private int          vao;
     private int          position_buffer;
     private int          index_buffer;
     private int          uniform_buffer;
+    private int           mv_location;
+    private int           proj_location;
 
-	public MultiViewport() {
-		super("OpenGL SuperBible - Multiple Viewports");
+	public MultiScissor() {
+		super("OpenGL SuperBible - Multiple Scissors");
 	}
-
-
+	
     protected void startup()
     {
         String vs_source =
@@ -104,18 +105,18 @@ public class MultiViewport extends Application {
         ;
 
         int vs = Shader.compile(GL_VERTEX_SHADER, vs_source);
-
         int gs = Shader.compile(GL_GEOMETRY_SHADER, gs_source);
-
         int fs = Shader.compile(GL_FRAGMENT_SHADER, fs_source);
 
         program = Program.link(true, vs, gs, fs);
 
+        mv_location = glGetUniformLocation(program, "mv_matrix");
+        proj_location = glGetUniformLocation(program, "proj_matrix");
+
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-        ShortBuffer vertex_indices = BufferUtilsHelper.createShortBuffer(new short[]
-        {
+        ShortBuffer vertex_indices = BufferUtilsHelper.createShortBuffer(new short[]{
             0, 1, 2,
             2, 1, 3,
             2, 3, 4,
@@ -144,7 +145,9 @@ public class MultiViewport extends Application {
 
         position_buffer = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
-        glBufferData(GL_ARRAY_BUFFER, vertex_positions, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER,
+                     vertex_positions,
+                     GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, MemoryUtil.NULL);
         glEnableVertexAttribArray(0);
 
@@ -169,57 +172,65 @@ public class MultiViewport extends Application {
     {
         int i;
 
+        glDisable(GL_SCISSOR_TEST);
+
         glViewport(0, 0, info.windowWidth, info.windowHeight);
         glClearBuffer4f(GL_COLOR, 0, 0.0f, 0.0f, 0.0f, 1.0f);
         glClearBuffer1f(GL_DEPTH, 0, 1f);
 
+        // Turn on scissor testing
+        glEnable(GL_SCISSOR_TEST);
+
         // Each rectangle will be 7/16 of the screen
-        float viewport_width = (float)(7 * info.windowWidth) / 16.0f;
-        float viewport_height = (float)(7 * info.windowHeight) / 16.0f;
+        int scissor_width = (7 * info.windowWidth) / 16;
+        int scissor_height = (7 * info.windowHeight) / 16;
 
         // Four rectangles - lower left first...
-        glViewportIndexedf(0, 0, 0, viewport_width, viewport_height);
+        glScissorIndexed(0,
+                         0, 0,
+                         scissor_width, scissor_height);
 
         // Lower right...
-        glViewportIndexedf(1,
-                           info.windowWidth - viewport_width, 0,
-                           viewport_width, viewport_height);
+        glScissorIndexed(1,
+                         info.windowWidth - scissor_width, 0,
+                         scissor_width, scissor_height);
 
         // Upper left...
-        glViewportIndexedf(2,
-                           0, info.windowHeight - viewport_height,
-                           viewport_width, viewport_height);
+        glScissorIndexed(2,
+                         0, info.windowHeight - scissor_height,
+                         scissor_width, scissor_height);
 
         // Upper right...
-        glViewportIndexedf(3,
-                           info.windowWidth - viewport_width,
-                           info.windowHeight - viewport_height,
-                           viewport_width, viewport_height);
+        glScissorIndexed(3,
+                         info.windowWidth - scissor_width,
+                         info.windowHeight - scissor_height,
+                         scissor_width, scissor_height);
+
+        glUseProgram(program);
 
         Matrix4x4f proj_matrix = Matrix4x4f.perspective(20.0f,
                                                      (float)info.windowWidth / (float)info.windowHeight,
                                                      0.1f,
                                                      1000.0f);
 
+        float f = (float)currentTime * 0.3f;
+
         glBindBufferBase(GL_UNIFORM_BUFFER, 0, uniform_buffer);
-        ByteBuffer mv_matrix_array = glMapBufferRange(GL_UNIFORM_BUFFER,
+        ByteBuffer bb_mv_matrix_array = glMapBufferRange(GL_UNIFORM_BUFFER,
                                                                         0,
                                                                         4 * Matrix4x4f.sizeof(),
                                                                         GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+        FloatBuffer mv_matrix_array = bb_mv_matrix_array.asFloatBuffer();
         for (i = 0; i < 4; i++)
         {
-        	Matrix4x4f mv_matrix = new Matrix4x4f(proj_matrix);
-        	mv_matrix
-            	.mul(Matrix4x4f.translate(0.0f, 0.0f, -2.0f))
-            	.mul(Matrix4x4f.rotate((float)currentTime * 45.0f * (float)(i + 1), 0.0f, 1.0f, 0.0f))
-            	.mul(Matrix4x4f.rotate((float)currentTime * 81.0f * (float)(i + 1), 1.0f, 0.0f, 0.0f));
-        	mv_matrix.toFloatBuffer(mv_matrix_array.asFloatBuffer());
-            mv_matrix_array.position(mv_matrix_array.position() + (int)Matrix4x4f.sizeof());
+        	Matrix4x4f mv_matrix = new Matrix4x4f(proj_matrix)
+        						.mul(Matrix4x4f.translate(0.0f, 0.0f, -2.0f))
+                                .mul(Matrix4x4f.rotate((float)currentTime * 45.0f * (float)(i + 1), 0.0f, 1.0f, 0.0f))
+                                .mul(Matrix4x4f.rotate((float)currentTime * 81.0f * (float)(i + 1), 1.0f, 0.0f, 0.0f));
+        	mv_matrix.toFloatBuffer(mv_matrix_array);
         }
 
         glUnmapBuffer(GL_UNIFORM_BUFFER);
-
-        glUseProgram(program);
 
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
     }
@@ -231,7 +242,8 @@ public class MultiViewport extends Application {
         glDeleteBuffers(position_buffer);
     }
 
-    public static void main(String[] args) {
-    	new MultiViewport().run();
-    }
+	public static void main(String[] args) {
+		new MultiScissor().run();
+	}
+
 }
