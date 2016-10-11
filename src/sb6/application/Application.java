@@ -60,101 +60,14 @@ public abstract class Application extends GLAPIHelper{
 		glfwWindowHint(GLFW_SAMPLES, info.samples);
 		glfwWindowHint(GLFW_STEREO, info.flags.stereo ? GL_TRUE : GL_FALSE);
 
-		glfwWindowHint(GLFW_ALPHA_BITS, 0);
-		glfwWindowHint(GLFW_DEPTH_BITS, 32);
-		glfwWindowHint(GLFW_STENCIL_BITS, 0);
+		glfwWindowHint(GLFW_ALPHA_BITS, 0);   // at least 0 bits for alpha value
+		glfwWindowHint(GLFW_DEPTH_BITS, 32);  // at least 32 bits for depth buffer
+		glfwWindowHint(GLFW_STENCIL_BITS, 1); // at least 1 bit for stencil buffer (required for stencil buffer operations)
 
-		if (info.flags.fullscreen) {
-			long monitor = glfwGetPrimaryMonitor();
-			GLFWvidmode mode = new GLFWvidmode(glfwGetVideoMode(monitor));
-
-			info.setWindowWidth(mode.getWidth());
-			info.setWindowHeight(mode.getHeight());
-			glfwWindowHint(GLFW_RED_BITS, mode.getRedBits());
-			glfwWindowHint(GLFW_GREEN_BITS, mode.getGreenBits());
-			glfwWindowHint(GLFW_BLUE_BITS, mode.getBlueBits());
-
-			window = glfwCreateWindow(info.getWindowWidth(), info.getWindowHeight(),
-					info.title, monitor, 0);
-			glfwSwapInterval(info.flags.vsync ? 1 : 0);
-		} else {
-			glfwWindowHint(GLFW_RED_BITS, 8);
-			glfwWindowHint(GLFW_GREEN_BITS, 8);
-			glfwWindowHint(GLFW_BLUE_BITS, 8);
-
-			window = glfwCreateWindow(info.getWindowWidth(), info.getWindowHeight(),
-					info.title, 0, 0);
-		}
-
-		if (window == NULL) {
-			System.err.print("Failed to open window\n");
-			glfwTerminate();
-			return;
-		}
-
-		windowSizeCB = new GLFWWindowSizeCallback() {
-			@Override
-			public void invoke(long window, int width, int height) {
-				Application.this.onResize(width, height);
-			}
-		};
-		glfwSetWindowSizeCallback(window, windowSizeCB);
+		createListeners();
 		
-		keyCB = new GLFWKeyCallback() {
-			@Override
-			public void invoke(long window, int key, int scancode, int action,
-					int mods) {
-				try {
-					Application.this.onKey(key, action);
-				} catch (Throwable e) {
-					e.printStackTrace();
-					requestExit(-1);
-				}
-			}
-		};
-		glfwSetKeyCallback(window, keyCB);
-		mouseButtonCB = new GLFWMouseButtonCallback() {
-			@Override
-			public void invoke(long window, int button, int action, int mods) {
-				Application.this.onMouseButton(button, action);
-			}
+		createDisplay();
 
-		};
-		glfwSetMouseButtonCallback(window, mouseButtonCB);
-		
-		cursorPosCB = new GLFWCursorPosCallback() {
-
-			@Override
-			public void invoke(long window, double xpos, double ypos) {
-				Application.this.onMouseMove(xpos, ypos);
-			}
-		};
-		glfwSetCursorPosCallback(window, cursorPosCB);
-
-		scrollCB = new GLFWScrollCallback() {
-			@Override
-			public void invoke(long window, double xoffset, double yoffset) {
-				Application.this.onMouseWheel(yoffset);
-			}
-
-		};
-		glfwSetScrollCallback(window, scrollCB);
-		if (info.flags.cursor)
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		else
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-
-		info.flags.stereo = (glfwGetWindowAttrib(window, GLFW_STEREO) == 1);
-
-		glfwMakeContextCurrent(window);
-
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the ContextCapabilities instance and makes the OpenGL
-        // bindings available for use.
-        GLContext.createFromCurrent();
-		
 		// loading of extensions is done automatically by the lwjgl library,
 		// thus, we dont need w3g.
 
@@ -183,8 +96,15 @@ public abstract class Application extends GLAPIHelper{
 		        /* Poll for and process events */
 		        glfwPollEvents();
 	
-				if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
+				if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 					running = false;
+				} else if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_PRESS) {
+						info.flags.fullscreen = !info.flags.fullscreen;
+						long previous = window;
+						createDisplay();
+						shutdown();
+						startup();
+						closeDisplay(previous);
 				} else if (glfwWindowShouldClose(window) == GL_TRUE) {
 					running = false;
 				}
@@ -200,9 +120,117 @@ public abstract class Application extends GLAPIHelper{
 		exit(exitStatus);
 	}
 
+	
+	private void closeDisplay(long window) {
+		GLFW.glfwSetWindowShouldClose(window, 1);
+		GLFW.glfwDestroyWindow(window);
+	}
+
+	private void createListeners() {
+
+		windowSizeCB = new GLFWWindowSizeCallback() {
+			@Override
+			public void invoke(long window, int width, int height) {
+				Application.this.onResize(width, height);
+			}
+		};
+		
+		keyCB = new GLFWKeyCallback() {
+			@Override
+			public void invoke(long window, int key, int scancode, int action,
+					int mods) {
+				try {
+					Application.this.onKey(key, action);
+				} catch (Throwable e) {
+					e.printStackTrace();
+					requestExit(-1);
+				}
+			}
+		};
+
+		mouseButtonCB = new GLFWMouseButtonCallback() {
+			@Override
+			public void invoke(long window, int button, int action, int mods) {
+				Application.this.onMouseButton(button, action);
+			}
+
+		};
+
+		
+		cursorPosCB = new GLFWCursorPosCallback() {
+
+			@Override
+			public void invoke(long window, double xpos, double ypos) {
+				Application.this.onMouseMove(xpos, ypos);
+			}
+		};
+
+		scrollCB = new GLFWScrollCallback() {
+			@Override
+			public void invoke(long window, double xoffset, double yoffset) {
+				Application.this.onMouseWheel(yoffset);
+			}
+
+		};
+
+	}
+	
+	private void createDisplay() {
+		if (info.flags.fullscreen) {
+			long monitor = glfwGetPrimaryMonitor();
+			GLFWvidmode mode = new GLFWvidmode(glfwGetVideoMode(monitor));
+
+			info.setWindowWidth(mode.getWidth());
+			info.setWindowHeight(mode.getHeight());
+			glfwWindowHint(GLFW_RED_BITS, mode.getRedBits());
+			glfwWindowHint(GLFW_GREEN_BITS, mode.getGreenBits());
+			glfwWindowHint(GLFW_BLUE_BITS, mode.getBlueBits());
+
+			window = glfwCreateWindow(info.getWindowWidth(), info.getWindowHeight(),
+					info.title, monitor, 0);
+			glfwSwapInterval(info.flags.vsync ? 1 : 0);
+		} else {
+			glfwWindowHint(GLFW_RED_BITS, 8);
+			glfwWindowHint(GLFW_GREEN_BITS, 8);
+			glfwWindowHint(GLFW_BLUE_BITS, 8);
+
+			window = glfwCreateWindow(info.getWindowWidth(), info.getWindowHeight(),
+					info.title, 0, 0);
+		}
+		
+
+		if (window == NULL) {
+			System.err.print("Failed to open window\n");
+			glfwTerminate();
+			return;
+		}
+
+		glfwSetWindowSizeCallback(window, windowSizeCB);
+		glfwSetKeyCallback(window, keyCB);
+		glfwSetMouseButtonCallback(window, mouseButtonCB);
+		glfwSetCursorPosCallback(window, cursorPosCB);
+		glfwSetScrollCallback(window, scrollCB);
+		
+		if (info.flags.cursor)
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		else
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+		info.flags.stereo = (glfwGetWindowAttrib(window, GLFW_STEREO) == 1);
+
+		glfwMakeContextCurrent(window);
+
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context, or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the ContextCapabilities instance and makes the OpenGL
+        // bindings available for use.
+        GLContext.createFromCurrent();
+	}
+
 	protected void requestExit(int status) {
 		exitStatus = status;
-		GLFW.glfwWindowShouldClose(window);
+		GLFW.glfwSetWindowShouldClose(window, 1);
 	}
 	
 	/** Immediate program exit */

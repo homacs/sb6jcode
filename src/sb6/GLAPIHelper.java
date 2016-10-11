@@ -3,6 +3,7 @@ package sb6;
 import static org.lwjgl.opengl.GL30.glClearBuffer;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -12,6 +13,7 @@ import org.lwjgl.BufferUtils;
 public class GLAPIHelper {
 	static class APICache {
 		FloatBuffer scalarf = BufferUtils.createFloatBuffer(1);
+		IntBuffer scalari = BufferUtils.createIntBuffer(1);
 		FloatBuffer vec4f = BufferUtils.createFloatBuffer(4);
 		static ThreadLocal<APICache> tls = new ThreadLocal<APICache>();
 		public static FloatBuffer getVec4f() {
@@ -28,6 +30,9 @@ public class GLAPIHelper {
 		public static FloatBuffer getScalarF() {
 			return getCache().scalarf;
 		}
+		public static IntBuffer getScalarI() {
+			return getCache().scalari;
+		}
 	}
 
 	
@@ -41,12 +46,18 @@ public class GLAPIHelper {
 		glClearBuffer(bits, 0, vec4f);
 	}
 
-	public static void glClearBuffer1f(int bits, int drawbuffer, float depth) {
+	public static void glClearBuffer1f(int bits, int drawbuffer, float val) {
 		final FloatBuffer scalarf = APICache.getScalarF();
-		scalarf.put(0, depth);
+		scalarf.put(0, val);
 		scalarf.rewind();
 		glClearBuffer(bits, 0, scalarf);
 	}
 
+	public static void glClearBuffer1i(int bits, int drawbuffer, int val) {
+		final IntBuffer scalari = APICache.getScalarI();
+		scalari.put(0, val);
+		scalari.rewind();
+		glClearBuffer(bits, 0, scalari);
+	}
 
 }

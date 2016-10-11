@@ -72,5 +72,6 @@ Chapter II: In Depth
 		Interpolation and Storage Qualifiers    noperspective
 	2. Per-Fragment Tests
 		Scissor Testing							multiscissor
+		Stencil Testing							simplestencil*
 		
 		
