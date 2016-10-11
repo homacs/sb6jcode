@@ -73,5 +73,11 @@ Chapter II: In Depth
 	2. Per-Fragment Tests
 		Scissor Testing							multiscissor
 		Stencil Testing							simplestencil*
+		Depth Testing							depthclamp
+	3. Color Output
+		Blending								blendmatrix
+		Logical Operations
+		Color Masking
+	4. Off-Screen Rendering
 		
 		
