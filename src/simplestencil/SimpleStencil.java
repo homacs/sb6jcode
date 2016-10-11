@@ -3,6 +3,9 @@ package simplestencil;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
+
+import org.lwjgl.glfw.GLFW;
+
 import sb6.application.Application;
 import sb6.shader.Program;
 import sb6.shader.Shader;
@@ -17,7 +20,7 @@ public class SimpleStencil extends Application {
 
 	private int rendering_program;
 	private int vertexArrayObjectId;
-
+	private volatile boolean stencil = true;
 
 
 	public SimpleStencil() {
@@ -52,7 +55,7 @@ public class SimpleStencil extends Application {
 		// Use the program object we created earlier for rendering
 		glUseProgram(rendering_program);
 
-		boolean stencil = true;
+		
 
 		// IMPORTANT NOTE: You need to create a framebuffer (i.e. display) which
 		// support (contains) stencil bits! Refer to your display manager library 
@@ -167,6 +170,17 @@ public class SimpleStencil extends Application {
 	
 	
 	
+	@Override
+	protected void onKey(int key, int action) throws Throwable {
+		if (action == GLFW.GLFW_RELEASE) return;
+		
+		switch (key) {
+		case GLFW.GLFW_KEY_S:
+			stencil = !stencil;
+			break;
+		}
+	}
+
 	public static void main(String[] args) {
 		new SimpleStencil().run();
 	}
