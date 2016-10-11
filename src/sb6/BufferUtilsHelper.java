@@ -114,6 +114,10 @@ public class BufferUtilsHelper {
 		return sb;
 	}
 
+	public static int sizeof(int[] array) {
+		return array.length * SIZEOF_INTEGER;
+	}
+
 
 
 
