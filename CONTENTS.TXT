@@ -84,4 +84,8 @@ Chapter II: In Depth
 			Rendering to Cube Maps
 		Framebuffer Completeness				
 		Rendering in Stereo						stereo (can't test it!)
+	5. Antialiasing
+		Antialiasing by Filtering				linesmooth, polygonsmooth
+		Multi-sample Antialiasing				msaanative
+		sampleshading?
 		

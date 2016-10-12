@@ -1,4 +1,6 @@
 package shadowmapping;
+
+
 import org.lwjgl.glfw.GLFW;
 
 import java.io.IOException;
