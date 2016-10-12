@@ -20,8 +20,13 @@ public class VectorNf {
 		return data;
 	}
 
+	public static float[] _add(float[] v1, float[] v2) {
+		float[] result = new float[v1.length];
+        for (int n = 0; n < v1.length; n++)
+            result[n] = v1[n] + v2[n];
+        return result;
+	}
 
-	
 	protected static float[] _sub(float[] v1, float[] v2) {
 		float[] result = new float[v1.length];
         for (int n = 0; n < v1.length; n++)

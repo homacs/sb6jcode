@@ -6,10 +6,12 @@ import sb6.BufferUtilsHelper;
 
 public class Matrix4x4f extends MatrixNxMf {
 	private float [] tmp;
+	private float[] tmp2;
 
 	public Matrix4x4f() {
 		super(4, 4);
 		tmp = new float [columns*this.rows];
+		tmp2 = new float [columns*this.rows];
 	}
 
 	/** 
@@ -18,6 +20,7 @@ public class Matrix4x4f extends MatrixNxMf {
 	public Matrix4x4f(float[] data) {
 		super(4, data);
 		tmp = new float [columns*this.rows];
+		tmp2 = new float [columns*this.rows];
 	}
 
 	public Matrix4x4f(Matrix4x4f m) {
@@ -33,17 +36,20 @@ public class Matrix4x4f extends MatrixNxMf {
 	 */
 	public Matrix4x4f(Vector4f column1, Vector4f column2,
 			Vector4f column3, Vector4f column4) {
+		this(column1.data, column2.data, column3.data, column4.data);
+	}
+
+	public Matrix4x4f(float[] column1, float[] column2, float[] column3, float[] column4) {
 		this();
 		int dest = 0;
-		System.arraycopy(column1.data, 0, data, dest, rows);
+		System.arraycopy(column1, 0, data, dest, rows);
 		dest += rows;
-		System.arraycopy(column2.data, 0, data, dest, rows);
+		System.arraycopy(column2, 0, data, dest, rows);
 		dest += rows;
-		System.arraycopy(column3.data, 0, data, dest, rows);
+		System.arraycopy(column3, 0, data, dest, rows);
 		dest += rows;
-		System.arraycopy(column4.data, 0, data, dest, rows);
+		System.arraycopy(column4, 0, data, dest, rows);
 		dest += rows;
-		
 	}
 
 	public static float degrees(float angleInRadians)
@@ -71,6 +77,38 @@ public class Matrix4x4f extends MatrixNxMf {
 	    result.setColumn(3, 0.0f, 0.0f, C, 0.0f);
 
 	    return result;
+	}
+
+
+	public static Matrix4x4f frustum(float left, float right, float bottom, float top, float n, float f)
+	{
+	    Matrix4x4f result = Matrix4x4f.identity();
+	
+	    if ((right == left) ||
+	        (top == bottom) ||
+	        (n == f) ||
+	        (n < 0.0) ||
+	        (f < 0.0))
+	       return result;
+	
+	    result.setCell(0, 0, (2.0f * n) / (right - left));
+	    result.setCell(1, 1, (2.0f * n) / (top - bottom));
+	
+	    result.setColumn(2, (right + left) / (right - left),
+	    		(top + bottom) / (top - bottom),
+	    		-(f + n) / (f - n),
+	    		-1.0f);
+	
+	    result.setCell(3, 2, -(2.0f * f * n) / (f - n));
+	    result.setCell(3, 3, 0.0f);
+	
+	    return result;
+	}
+
+	
+	
+	private void setCell(int column, int row, float f) {
+		data[row + column*rows] = f;
 	}
 
 	private void setColumn(int col, float v1, float v2, float v3, float v4) {
@@ -133,6 +171,20 @@ public class Matrix4x4f extends MatrixNxMf {
 	}
 
 	public Matrix4x4f setRotate(float angle, float x, float y, float z) {
+		rotate(data, angle, x, y, z);
+		return this;
+	}
+
+	public Matrix4x4f mulRotate(float angle, float x, float y, float z) {
+		rotate(tmp, angle, x, y, z);
+		multiply(tmp2, data, tmp, columns, rows);
+		float[] swap = data;
+		data = tmp2;
+		tmp2 = swap;
+		return this;
+	}
+	
+	private static void rotate(float[] data, float angle, float x, float y, float z) {
 		int i = 0;
 		
 	    float x2 = x * x;
@@ -158,7 +210,6 @@ public class Matrix4x4f extends MatrixNxMf {
 	    data[i++] = (float)(0);
 	    data[i++] = (float)(0);
 	    data[i++] = (float)(1);
-		return this;
 	}
 
 
@@ -172,7 +223,12 @@ public class Matrix4x4f extends MatrixNxMf {
 		result.setScale(x,y,z);
 		return result;
 	}
-	
+
+	public static Matrix4x4f scale(float f) {
+		return scale(f,f,f);
+	}
+
+
 	public void setScale(float x, float y, float z) {
 		int r = 0, c = 0;
 		data[r + c*rows] = x; r++; c++;
@@ -182,19 +238,9 @@ public class Matrix4x4f extends MatrixNxMf {
 	}
 
 	public Matrix4x4f mul(Matrix4x4f m) {
+
+		multiply(tmp, data, m.data, columns, rows);
 		
-		for(int c = 0; c < columns; c++) {
-			for (int r = 0; r < rows; r++) {
-                float sum = 0f;
-
-                for (int n = 0; n < columns; n++)
-                {
-                    sum += data[r + n*rows] * m.data[n + c*rows];
-                }
-
-                tmp[r + c*rows] = sum;
-			}
-		}
 		// swap (data, tmp)
 		float[] swap = data;
 		this.data = tmp;
@@ -204,10 +250,28 @@ public class Matrix4x4f extends MatrixNxMf {
 		return this;
 	}
 
+	private static void multiply(float[] dst, float[] src1, float[] src2, int src1_columns, int src1_rows) {
+		if (dst == src1 || dst == src2) throw new IllegalArgumentException("dst must be different from src1 and src2");
+		
+		for(int c = 0; c < src1_columns; c++) {
+			for (int r = 0; r < src1_rows; r++) {
+                float sum = 0f;
+
+                for (int n = 0; n < src1_columns; n++)
+                {
+                    sum += src1[r + n*src1_rows] * src2[n + c*src1_rows];
+                }
+
+                dst[r + c*src1_rows] = sum;
+			}
+		}
+	}
+	
+	
 	/** Returns the product of m1 * m2 as new Matrix4x4f */
 	public static Matrix4x4f multiply(Matrix4x4f m1,
 			Matrix4x4f m2) {
-		return new Matrix4x4f(m1) .mul(m2);
+		return new Matrix4x4f(m1).mul(m2);
 	}
 
 	public static long sizeof() {

@@ -29,6 +29,10 @@ public class Vector3f extends VectorNf {
 		return new Vector3f(VectorNf._sub(v1.data,v2.data));
 	}
 
+	public static Vector3f add(Vector3f v1, Vector3f v2) {
+		return new Vector3f(VectorNf._add(v1.data,v2.data));
+	}
+
 	public static Vector3f normalize(Vector3f v) {
 		return new Vector3f(_normalize(v));
 	}

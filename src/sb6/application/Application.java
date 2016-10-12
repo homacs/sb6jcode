@@ -202,6 +202,7 @@ public abstract class Application extends GLAPIHelper{
 		if (window == NULL) {
 			System.err.print("Failed to open window\n");
 			glfwTerminate();
+			System.exit(-1);
 			return;
 		}
 

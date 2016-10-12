@@ -169,8 +169,8 @@ public class GSLayered extends Application {
         {
             float fi = (float)(i + 12) / 16.0f;
             buffer.mv_matrix[i] = Matrix4x4f.translate(0.0f, 0.0f, -4.0f)
-                                  .mul(Matrix4x4f.rotate((float)t * 25.0f * fi, 0.0f, 0.0f, 1.0f))
-                                  .mul(Matrix4x4f.rotate((float)t * 30.0f * fi, 1.0f, 0.0f, 0.0f));
+                                  .mulRotate((float)t * 25.0f * fi, 0.0f, 0.0f, 1.0f)
+                                  .mulRotate((float)t * 30.0f * fi, 1.0f, 0.0f, 0.0f);
         }
         
         buffer.commit();

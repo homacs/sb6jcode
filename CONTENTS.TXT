@@ -78,6 +78,10 @@ Chapter II: In Depth
 		Blending								blendmatrix
 		Logical Operations
 		Color Masking
-	4. Off-Screen Rendering
-		
+	4. Off-Screen Rendering						basicfbo
+		Multiple Framebuffer Attachments		
+		Layered Rendering						gslayered
+			Rendering to Cube Maps
+		Framebuffer Completeness				
+		Rendering in Stereo						stereo (can't test it!)
 		
