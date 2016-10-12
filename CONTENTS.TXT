@@ -79,7 +79,7 @@ Chapter II: In Depth
 		Logical Operations
 		Color Masking
 	4. Off-Screen Rendering						basicfbo
-		Multiple Framebuffer Attachments		
+		Multiple Framebuffer Attachments		shadowmapping
 		Layered Rendering						gslayered
 			Rendering to Cube Maps
 		Framebuffer Completeness				
