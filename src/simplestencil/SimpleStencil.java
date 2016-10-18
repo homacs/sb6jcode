@@ -13,6 +13,14 @@ import sb6.shader.Shader;
 /**
  * This was added to the examples to test stencils.
  * 
+ * This example draws two triangles: a static triangle, which further 
+ * away and a moving triangle which is closer to the camera.
+ * The stencil buffer is used to prevent the static triangle 
+ * to be covered by the moving triangle. 
+ * 
+ * When switching the stencil test off (tollge with 'S') the moving triangle will 
+ * be drawn over the static triangle, because it is closer to the camera.
+ * 
  * @author homac
  *
  */

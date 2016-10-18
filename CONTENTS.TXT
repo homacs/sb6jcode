@@ -87,5 +87,6 @@ Chapter II: In Depth
 	5. Antialiasing
 		Antialiasing by Filtering				linesmooth, polygonsmooth
 		Multi-sample Antialiasing				msaanative
-		sampleshading?
+		Sample Coverage							
+		Sample Rate Shading						sampleshading
 		
