@@ -89,4 +89,4 @@ Chapter II: In Depth
 		Multi-sample Antialiasing				msaanative
 		Sample Coverage							
 		Sample Rate Shading						sampleshading
-		
+		Centroid Sampling						centroidshading*
