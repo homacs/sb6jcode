@@ -90,3 +90,8 @@ Chapter II: In Depth
 		Sample Coverage							
 		Sample Rate Shading						sampleshading
 		Centroid Sampling						centroidshading*
+	6. Advanced Framebuffer Formats
+		Floating-Point Framebuffers
+			High Dynamic Range					hdrexposure
+			Tone Mapping						hdrtonemap
+			Making Your Scene Bloom				hdrbloom
