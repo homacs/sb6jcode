@@ -2,6 +2,8 @@ package sb6.vmath;
 
 import static java.lang.Math.*;
 
+import java.nio.ByteBuffer;
+
 import sb6.BufferUtilsHelper;
 
 public class Matrix4x4f extends MatrixNxMf {
@@ -276,6 +278,11 @@ public class Matrix4x4f extends MatrixNxMf {
 
 	public static long sizeof() {
 		return 16L * BufferUtilsHelper.SIZEOF_FLOAT;
+	}
+
+	public void toByteBuffer(ByteBuffer out) {
+		toFloatBuffer(out.asFloatBuffer());
+		out.position(out.position() + (int)sizeof());
 	}
 
 	
