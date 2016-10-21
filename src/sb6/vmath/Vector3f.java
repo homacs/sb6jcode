@@ -2,7 +2,6 @@ package sb6.vmath;
 
 
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
 
 import sb6.BufferUtilsHelper;
 
@@ -58,10 +57,6 @@ public class Vector3f extends VectorNf {
 	}
 
 
-	public void fromFloatBuffer(FloatBuffer in) {
-		in.get(data);
-	}
-
 
 	public void fromByteBuffer(ByteBuffer in) {
 		fromFloatBuffer(in.asFloatBuffer());
@@ -73,12 +68,6 @@ public class Vector3f extends VectorNf {
 		toFloatBuffer(buf.asFloatBuffer());
 		buf.position(buf.position() + Vector3f.sizeof());
 	}
-
-
-	public void toFloatBuffer(FloatBuffer out) {
-		out.put(data);
-	}
-
 
 	public void set(float x, float y, float z) {
 		data[0] = x;

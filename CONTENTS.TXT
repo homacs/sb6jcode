@@ -102,4 +102,9 @@ Chapter II: In Depth
 		Rendering a Starfield					starfield
 		Point Parameters
 		Shaped Points							shapedpoints
-		
+	8. Compute Shaders
+		Using Compute Shaders					
+		Examples
+			Parallel Prefix Sum					prefixsum, prefixsum2d
+			Depth of Field						dof
+			Compute Shader Flocking				csflocking

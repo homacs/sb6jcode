@@ -60,6 +60,10 @@ public class Program {
 	public static int link (boolean check_errors, int ... shaderIds) {
 		int programId = glCreateProgram();
 		for(int shaderId : shaderIds) {
+			if (!Shader.checkCompilerResult(shaderId)) {
+				glDeleteProgram(programId);
+				return INVALID_PROGRAM_ID;
+			}
 			glAttachShader(programId, shaderId);
 		}
 		

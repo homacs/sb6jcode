@@ -1,5 +1,6 @@
 package sb6.vmath;
 
+
 public class Vector4f extends VectorNf {
 
 	public Vector4f(float[] fs) {
@@ -13,6 +14,8 @@ public class Vector4f extends VectorNf {
 	public static Vector4f normalize(Vector4f plane) {
 		return new Vector4f(_normalize(plane));
 	}
+
+
 
 
 }

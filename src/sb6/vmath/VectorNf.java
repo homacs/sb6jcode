@@ -1,5 +1,7 @@
 package sb6.vmath;
 
+import java.nio.FloatBuffer;
+
 public class VectorNf {
 
 	protected float[] data;
@@ -89,6 +91,14 @@ public class VectorNf {
 		}
 		s.append(data[i]);
 		return s.toString();
+	}
+
+
+	public void toFloatBuffer(FloatBuffer out) {
+		out.put(data);
+	}
+	public void fromFloatBuffer(FloatBuffer in) {
+		in.get(data);
 	}
 
 

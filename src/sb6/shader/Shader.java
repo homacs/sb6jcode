@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL20.glShaderSource;
 import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 import static org.lwjgl.opengl.GL40.GL_TESS_CONTROL_SHADER;
 import static org.lwjgl.opengl.GL40.GL_TESS_EVALUATION_SHADER;
+import static org.lwjgl.opengl.GL43.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +61,8 @@ public class Shader {
 				glDeleteShader(shaderId);
 				return INVALID_SHADER_ID;
 			}
+		} else {
+			System.err.println("Unsupported shader type " + shaderType);
 		}
 		return shaderId;
 	}
@@ -82,6 +85,7 @@ public class Shader {
 		case GL_GEOMETRY_SHADER:
 		case GL_TESS_CONTROL_SHADER:
 		case GL_TESS_EVALUATION_SHADER:
+		case GL_COMPUTE_SHADER:
 			return true;
 		default: 
 			return false;
@@ -90,6 +94,10 @@ public class Shader {
 	
 	
 	public static boolean checkCompilerResult(int shaderId, String filename) {
+		if (shaderId == INVALID_SHADER_ID) {
+			System.err.println("Invalid shader id!");
+			return false;
+		}
 		// check result
 		IntBuffer status = BufferUtils.createIntBuffer(1);
 		glGetShader(shaderId, GL_COMPILE_STATUS, status);
@@ -120,8 +128,12 @@ public class Shader {
 	}
 	
 
-	public static void checkCompilerResult(int shader) {
-		checkCompilerResult(shader, "in-memory");
+	public static boolean checkCompilerResult(int shader) {
+		return checkCompilerResult(shader, "in-memory");
+	}
+
+	public static void delete(int shader) {
+		glDeleteShader(shader);
 	}
 
 
