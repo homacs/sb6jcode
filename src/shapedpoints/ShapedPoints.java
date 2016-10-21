@@ -34,21 +34,25 @@ public class ShapedPoints extends Application {
             "    vec2 p = gl_PointCoord * 2.0 - vec2(1.0);                  \n" +
             "    if (shape == 0)                                            \n" +
             "    {                                                          \n" +
+            "        // simple disc shape                                   \n" +
             "        if (dot(p, p) > 1.0)                                   \n" +
             "            discard;                                           \n" +
             "    }                                                          \n" +
             "    else if (shape == 1)                                       \n" +
             "    {                                                          \n" +
+            "        // Hollow circle                                       \n" +
             "        if (dot(p, p) > sin(atan(p.y, p.x) * 5.0))             \n" +
             "            discard;                                           \n" +
             "    }                                                          \n" +
             "    else if (shape == 2)                                       \n" +
             "    {                                                          \n" +
+            "        // Flower shape                                        \n" +
             "        if (abs(0.8 - dot(p, p)) > 0.2)                        \n" +
             "            discard;                                           \n" +
             "    }                                                          \n" +
             "    else if (shape == 3)                                       \n" +
             "    {                                                          \n" +
+            "        // Bowtie                                              \n" +
             "        if (abs(p.x) < abs(p.y))                               \n" +
             "            discard;                                           \n" +
             "    }                                                          \n" +
