@@ -95,3 +95,11 @@ Chapter II: In Depth
 			High Dynamic Range					hdrexposure
 			Tone Mapping						hdrtonemap
 			Making Your Scene Bloom				hdrbloom
+		Integer Framebuffers
+		The sRGB Color Space
+	7. Point Sprites
+		Texturing Points
+		Rendering a Starfield					starfield
+		Point Parameters
+		Shaped Points							shapedpoints
+		
