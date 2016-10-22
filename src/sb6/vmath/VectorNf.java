@@ -43,6 +43,15 @@ public class VectorNf {
 		}
 		return result;
 	}
+	
+	protected static float[] _mul(float[] v1, float[] v2) {
+		float[] result = new float[v1.length];
+        int n;
+        for (n = 0; n < v1.length; n++)
+            result[n] = v1[n] * v2[n];
+        return result;
+
+	}
 
 	protected static float[] _normalize(final VectorNf v) {
 		return _div(v.data, length(v));

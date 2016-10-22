@@ -2,6 +2,7 @@ package sb6.vmath;
 
 
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 import sb6.BufferUtilsHelper;
 
@@ -34,6 +35,16 @@ public class Vector3f extends VectorNf {
 		return new Vector3f(VectorNf._sub(v1.data,v2.data));
 	}
 
+	public Vector3f sub(Vector3f subtrahend) {
+		this.data = VectorNf._sub(this.data, subtrahend.data);
+		return this;
+	}
+
+	public Vector3f mul(float f) {
+		super.mul(f);
+		return this;
+	}
+	
 	public static Vector3f add(Vector3f v1, Vector3f v2) {
 		return new Vector3f(VectorNf._add(v1.data,v2.data));
 	}
@@ -73,6 +84,19 @@ public class Vector3f extends VectorNf {
 		data[0] = x;
 		data[1] = y;
 		data[2] = z;
+	}
+
+
+	private static Random rng = new Random();
+	
+	public static Vector3f random() {
+		return new Vector3f(rng.nextFloat(), rng.nextFloat(), rng.nextFloat());
+	}
+
+
+	public Vector3f mul(Vector3f v) {
+		data = super._mul(data, v.data);
+		return this;
 	}
 
 
