@@ -13,11 +13,14 @@ at https://github.com/openglsuperbible/sb6code using
     - Download the media package from 
       http://openglsuperbible.com/files/sb6media_2013_11_10.zip
       (respectively http://www.openglsuperbible.com/example-code/ 
-      if the link is broken)
+      if the link is broken).
+    - there is a missing texture (salad-gray.ktx) which is 
+      available in the newer version of the media package:
+      http://openglsuperbible.com/files/superbible7-media.zip
   - The LWJGL library used is located in the lib directory of 
     the repository.
 
 ## Eclipse Project Settings
 The project settings contained in the repository are configured 
 for Linux. If you want to configure it for another system please
-refer to the README.ECLIPSE file.
+refer to the README.ECLIPSE file for more configuration details.
