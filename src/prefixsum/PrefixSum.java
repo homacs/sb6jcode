@@ -61,6 +61,12 @@ public class PrefixSum extends Application {
 	    }
 	
 	    prefix_sum(input_data, output_data, NUM_ELEMENTS);
+	    
+	    System.out.printf("C code result: %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f " +
+                "%2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f\n",
+                output_data[0], output_data[1], output_data[2], output_data[3], output_data[4], output_data[5], output_data[6], output_data[7],
+                output_data[8], output_data[9], output_data[10], output_data[11], output_data[12], output_data[13], output_data[14], output_data[15]);
+
 	
 	    load_shaders();
 	}
@@ -89,7 +95,7 @@ public class PrefixSum extends Application {
 	    
 	    if (DEBUG) {
 	    
-		    System.out.printf("%2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f " +
+		    System.out.printf("compute shader result: %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f " +
 		                    "%2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f %2.2f\n",
 		                    ptr.get(0), ptr.get(1), ptr.get(2), ptr.get(3), ptr.get(4), ptr.get(5), ptr.get(6), ptr.get(7),
 		                    ptr.get(8), ptr.get(9), ptr.get(10), ptr.get(11), ptr.get(12), ptr.get(13), ptr.get(14), ptr.get(15));
@@ -144,6 +150,8 @@ public class PrefixSum extends Application {
 	    glShaderStorageBlockBinding(prefix_sum_prog, 1, 1);
 	}
 	
+	/** This is just an example implementation of prefixsum in C.
+	 *  The output should be the same as that of the compute shader.*/
 	void prefix_sum(final float[] input, float[] output, int elements)
 	{
 	    float f = 0.0f;
