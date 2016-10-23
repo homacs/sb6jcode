@@ -102,9 +102,15 @@ Chapter II: In Depth
 		Rendering a Starfield					starfield
 		Point Parameters
 		Shaped Points							shapedpoints
-	8. Compute Shaders
+10. Compute Shaders
 		Using Compute Shaders					
 		Examples
 			Parallel Prefix Sum					prefixsum, prefixsum2d
 			Depth of Field						dof
 			Compute Shader Flocking				csflocking
+11. Controlling and Monitoring the Pipeline		<TODO>
+
+Chapter III: In Practice
+12. Rendering Techniques
+	1. Lighting Models
+		The Phong Lighting Model				phonglighting

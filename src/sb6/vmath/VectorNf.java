@@ -2,15 +2,21 @@ package sb6.vmath;
 
 import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
+
 public class VectorNf {
 
 	protected float[] data;
+	private FloatBuffer apiBuffer;
 
+	
 	public VectorNf(float[] fs) {
+		apiBuffer = BufferUtils.createFloatBuffer(fs.length);
 		data = fs;
 	}
 
 	public VectorNf(float f, int len) {
+		apiBuffer = BufferUtils.createFloatBuffer(len);
 		data = new float[len];
         for (int n = 0; n < data.length; n++)
         {
@@ -110,6 +116,11 @@ public class VectorNf {
 		in.get(data);
 	}
 
+	public FloatBuffer toFloatBuffer() {
+		toFloatBuffer(apiBuffer);
+		apiBuffer.rewind();
+		return apiBuffer;
+	}
 
 
 }

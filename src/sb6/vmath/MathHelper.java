@@ -13,4 +13,8 @@ public class MathHelper {
 	public static float cosf(float f) {
 		return (float)Math.cos(f);
 	}
+
+	public static float powf(float f, float g) {
+		return (float) Math.pow(f, g);
+	}
 }
