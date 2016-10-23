@@ -1,4 +1,4 @@
-package phonglighting;
+package blinnphong;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -19,11 +19,18 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL31.*;
 
-public class PhongLighting extends Application {
+public class BlinnPhong extends Application {
 	private static final boolean MANY_OBJECTS = false;
-	
+
     private int          per_fragment_program = 0;
-    private int          per_vertex_program = 0;
+
+    class Textures
+    {
+        int      color;
+        int      normals;
+    } 
+    Textures textures = new Textures();
+
 
     static class UniformsBlock
     {
@@ -44,20 +51,19 @@ public class PhongLighting extends Application {
 
     private int          uniforms_buffer;
 
+
     class Uniforms
     {
         int           diffuse_albedo;
         int           specular_albedo;
         int           specular_power;
     } 
-    private Uniforms[] uniforms = new Uniforms[] {new Uniforms(), new Uniforms()};
+    private Uniforms uniforms = new Uniforms();
 
     private SBMObject     object = new SBMObject();
 
-    private volatile boolean       per_vertex = false;
-
-	public PhongLighting() {
-		super("OpenGL SuperBible - Phong Lighting");
+	public BlinnPhong() {
+		super("OpenGL SuperBible - Blinn-Phong Shading");
 	}
 	
 	protected void startup() throws IOException
@@ -75,10 +81,11 @@ public class PhongLighting extends Application {
 	    glDepthFunc(GL_LEQUAL);
 	}
 	
+
 	protected void render(double currentTime)
 	{
 	
-	    glUseProgram(per_vertex ? per_vertex_program : per_fragment_program);
+	    glUseProgram(per_fragment_program);
 	    glViewport(0, 0, info.windowWidth, info.windowHeight);
 	
 	    glClearBuffer4f(GL_COLOR, 0, 0.1f, 0.1f, 0.1f, 0.0f);
@@ -116,8 +123,8 @@ public class PhongLighting extends Application {
 		            glUnmapBuffer(GL_UNIFORM_BUFFER);
 		
 		            Vector3f specular_albedo = new Vector3f((float)i / 9.0f + 1.0f / 9.0f);
-		            glUniform1f(uniforms[per_vertex ? 1 : 0].specular_power, MathHelper.powf(2.0f, (float)j + 2.0f));
-		            glUniform3(uniforms[per_vertex ? 1 : 0].specular_albedo, specular_albedo.toFloatBuffer());
+		            glUniform1f(uniforms.specular_power, MathHelper.powf(2.0f, (float)j + 2.0f));
+		            glUniform3(uniforms.specular_albedo, specular_albedo.toFloatBuffer());
 		
 		            object.render();
 		        }
@@ -140,13 +147,13 @@ public class PhongLighting extends Application {
 		    block.write(stream);
 		    glUnmapBuffer(GL_UNIFORM_BUFFER);
 		
-		    glUniform1f(uniforms[per_vertex ? 1 : 0].specular_power, 30.0f);
-		    glUniform3(uniforms[per_vertex ? 1 : 0].specular_albedo, new Vector3f(1.0f).toFloatBuffer());
+		    glUniform1f(uniforms.specular_power, 30.0f);
+		    glUniform3(uniforms.specular_albedo, new Vector3f(1.0f).toFloatBuffer());
 		
 		    object.render();
 		}
 	}
-	
+		
 	protected void onKey(int key, int action) throws IOException
 	{
 	    if (action == GLFW.GLFW_PRESS)
@@ -156,44 +163,25 @@ public class PhongLighting extends Application {
 	            case 'R': 
 	                load_shaders();
 	                break;
-	            case 'V':
-	            	/* 
-	            	 * Toggle between Gouraud Shading (per vertex)
-	            	 * and Phong Shading (per pixel).
-	            	 */
-	                per_vertex = !per_vertex;
-	                break;
 	        }
 	    }
 	}
 	
-	void load_shaders() throws IOException
+	private void load_shaders() throws IOException
 	{
 	    int vs, fs;
 	
-	    vs = Shader.load(getMediaPath() + "/shaders/phonglighting/per-fragment-phong.vs.glsl", GL_VERTEX_SHADER);
-	    fs = Shader.load(getMediaPath() + "/shaders/phonglighting/per-fragment-phong.fs.glsl", GL_FRAGMENT_SHADER);
+	    vs = Shader.load(getMediaPath() + "/shaders/blinnphong/blinnphong.vs.glsl", GL_VERTEX_SHADER);
+	    fs = Shader.load(getMediaPath() + "/shaders/blinnphong/blinnphong.fs.glsl", GL_FRAGMENT_SHADER);
 	
 	    if (per_fragment_program != 0)
 	        glDeleteProgram(per_fragment_program);
 	
 	    per_fragment_program = Program.link(true, vs, fs);
 	
-	    uniforms[0].diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
-	    uniforms[0].specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
-	    uniforms[0].specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
-	
-	    vs = Shader.load(getMediaPath() + "/shaders/phonglighting/per-vertex-phong.vs.glsl", GL_VERTEX_SHADER);
-	    fs = Shader.load(getMediaPath() + "/shaders/phonglighting/per-vertex-phong.fs.glsl", GL_FRAGMENT_SHADER);
-	
-	    if (per_vertex_program != 0)
-	        glDeleteProgram(per_vertex_program);
-	
-	    per_vertex_program = Program.link(true, vs, fs);
-	
-	    uniforms[1].diffuse_albedo = glGetUniformLocation(per_vertex_program, "diffuse_albedo");
-	    uniforms[1].specular_albedo = glGetUniformLocation(per_vertex_program, "specular_albedo");
-	    uniforms[1].specular_power = glGetUniformLocation(per_vertex_program, "specular_power");
+	    uniforms.diffuse_albedo = glGetUniformLocation(per_fragment_program, "diffuse_albedo");
+	    uniforms.specular_albedo = glGetUniformLocation(per_fragment_program, "specular_albedo");
+	    uniforms.specular_power = glGetUniformLocation(per_fragment_program, "specular_power");
 	}
 
 	@Override
@@ -202,7 +190,7 @@ public class PhongLighting extends Application {
 	}
 	
 	public static void main(String[] args) {
-		new PhongLighting().run();
+		new BlinnPhong().run();
 	}
 
 
