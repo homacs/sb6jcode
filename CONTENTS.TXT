@@ -114,3 +114,6 @@ Chapter III: In Practice
 12. Rendering Techniques
 	1. Lighting Models
 		The Phong Lighting Model				phonglighting
+		Blinn-Phong Lighting					blinnphong
+		Rim Lighting							rimlight
+		Normal Mapping							bumpmapping

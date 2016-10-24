@@ -19,10 +19,13 @@ void main(void)
     // Normalize our incomming view and light direction vectors.
     vec3 V = normalize(fs_in.eyeDir);
     vec3 L = normalize(fs_in.lightDir);
+
     // Read the normal from the normal map and normalize it.
     vec3 N = normalize(texture(tex_normal, fs_in.texcoord).rgb * 2.0 - vec3(1.0));
+
     // Uncomment this to use surface normals rather than the normal map
-    // N = vec3(0.0, 0.0, 1.0);
+    // vec3 N = vec3(0.0, 0.0, 1.0);
+    
     // Calculate R ready for use in Phong lighting.
     vec3 R = reflect(-L, N);
 
