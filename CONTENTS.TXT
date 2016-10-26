@@ -117,3 +117,5 @@ Chapter III: In Practice
 		Blinn-Phong Lighting					blinnphong
 		Rim Lighting							rimlight
 		Normal Mapping							bumpmapping
+		Environment Mapping
+			Spherical Env. Maps					envmapsphere

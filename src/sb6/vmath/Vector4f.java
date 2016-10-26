@@ -11,6 +11,7 @@ public class Vector4f extends VectorNf {
 		super(new float[]{x,y,z,d});
 	}
 
+
 	public static Vector4f normalize(Vector4f plane) {
 		return new Vector4f(_normalize(plane));
 	}

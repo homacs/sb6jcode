@@ -94,7 +94,7 @@ public class Vector3f extends VectorNf {
 	}
 
 
-	public Vector3f mul(Vector3f v) {
+	public Vector3f dot(Vector3f v) {
 		data = super._mul(data, v.data);
 		return this;
 	}

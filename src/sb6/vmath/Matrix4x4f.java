@@ -285,5 +285,13 @@ public class Matrix4x4f extends MatrixNxMf {
 		out.position(out.position() + (int)sizeof());
 	}
 
+	public Vector3f mul(Vector3f v) {
+		Vector3f r = new Vector3f();
+		r.data[0] = v.data[0] * get(0,0) + v.data[1] * get(0,1) + v.data[2] * get(0,2);
+		r.data[1] = v.data[0] * get(1,0) + v.data[1] * get(1,1) + v.data[2] * get(1,2);
+		r.data[2] = v.data[0] * get(2,0) + v.data[1] * get(2,1) + v.data[2] * get(2,2);
+		return r;
+	}
+
 	
 }

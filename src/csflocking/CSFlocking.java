@@ -178,7 +178,7 @@ public class CSFlocking extends Application {
                                        cosf(t * 0.29f),
                                        sinf(t * 0.12f) * cosf(t * 0.5f));
 
-        goal = goal.mul(new Vector3f(35.0f, 25.0f, 60.0f));
+        goal = goal.dot(new Vector3f(35.0f, 25.0f, 60.0f));
         FloatBuffer goal_fb = BufferUtils.createFloatBuffer(3);
         goal.toFloatBuffer(goal_fb);
         goal_fb.rewind();
