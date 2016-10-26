@@ -72,7 +72,7 @@ public class EnvMapSphere extends Application {
 
         // This variable allows to either rotate the object in front
         // of a steady camera or move the camera around the object instead.
-        boolean steadyCam = false;
+        boolean steadyCam = true;
         
         if (steadyCam) {
         	// This was the original code for the model view matrix.
