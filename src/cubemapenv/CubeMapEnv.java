@@ -24,8 +24,6 @@ public class CubeMapEnv extends Application {
     private int          skybox_prog = 0;
 
     private int          tex_envmap = 0;
-    private int[]        envmaps = new int[3];
-    private int          envmap_index = 0;
 
     class Uniforms
     {
@@ -53,8 +51,7 @@ public class CubeMapEnv extends Application {
 	
     protected void startup() throws IOException
     {
-        envmaps[0] = KTX.load(getMediaPath() + "/textures/envmaps/mountaincube.ktx");
-        tex_envmap = envmaps[envmap_index];
+    	tex_envmap = KTX.load(getMediaPath() + "/textures/envmaps/mountaincube.ktx");
 
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -79,7 +76,7 @@ public class CubeMapEnv extends Application {
         Matrix4x4f view_matrix = Matrix4x4f.lookat(new Vector3f(15.0f * MathHelper.sinf(t), 0.0f, 15.0f * MathHelper.cosf(t)),
                                                 new Vector3f(0.0f, 0.0f, 0.0f),
                                                 new Vector3f(0.0f, 1.0f, 0.0f));
-        Matrix4x4f mv_matrix = view_matrix
+        Matrix4x4f mv_matrix = new Matrix4x4f(view_matrix)
         		.mul(Matrix4x4f.rotate(t, 1.0f, 0.0f, 0.0f))
         		.mul(Matrix4x4f.rotate(t * 130.1f, 0.0f, 1.0f, 0.0f))
         		.mul(Matrix4x4f.translate(0.0f, -4.0f, 0.0f));
@@ -112,9 +109,7 @@ public class CubeMapEnv extends Application {
     protected void shutdown()
     {
         glDeleteProgram(render_prog);
-        glDeleteTextures(envmaps[0]);
-        glDeleteTextures(envmaps[1]);
-        glDeleteTextures(envmaps[2]);
+        glDeleteTextures(tex_envmap);
     }
 
     void load_shaders() throws IOException
@@ -153,10 +148,6 @@ public class CubeMapEnv extends Application {
             switch (key)
             {
                 case 'R': load_shaders();
-                    break;
-                case 'E':
-                    envmap_index = (envmap_index + 1) % 3;
-                    tex_envmap = envmaps[envmap_index];
                     break;
             }
         }
