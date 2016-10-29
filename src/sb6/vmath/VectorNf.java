@@ -59,6 +59,13 @@ public class VectorNf {
 
 	}
 
+	static float[] _mul_inplace(float[] v1, float f) {
+        int n;
+        for (n = 0; n < v1.length; n++)
+            v1[n] = v1[n] * f;
+        return v1;
+	}
+
 	protected static float[] _normalize(final VectorNf v) {
 		return _div(v.data, length(v));
 	}
@@ -121,6 +128,7 @@ public class VectorNf {
 		apiBuffer.rewind();
 		return apiBuffer;
 	}
+
 
 
 }

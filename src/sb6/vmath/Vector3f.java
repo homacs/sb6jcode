@@ -1,6 +1,7 @@
 package sb6.vmath;
 
 
+import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
@@ -97,6 +98,16 @@ public class Vector3f extends VectorNf {
 	public Vector3f dot(Vector3f v) {
 		data = super._mul(data, v.data);
 		return this;
+	}
+
+
+	public void print(PrintStream out) {
+		out.print("(");
+		for (int i = 0; i < data.length; i++) {
+			out.printf("%5.2f", data[i]);
+			if (i < data.length) out.print(", ");
+		}
+		out.println(")");
 	}
 
 

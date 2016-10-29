@@ -293,5 +293,9 @@ public class Matrix4x4f extends MatrixNxMf {
 		return r;
 	}
 
+	public static Matrix4x4f inverse(Matrix4x4f in) {
+		return new Matrix4x4f(MatrixNxMf.inverse(in).getData());
+	}
+
 	
 }
