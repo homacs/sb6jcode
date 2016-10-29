@@ -32,7 +32,7 @@ void main(void)
 	 view matrix, to create a matrix which does just the opposite.
       
      Translational movement of distance objects gets slower and slower the further away
-     those objects are. You can litterally observe it, when you look out of window of 
+     those objects are. You can literally observe it, when you look out of the window of 
      a driving car or train. Distant objects move much slower then objects very 
      close to you. Since we assume the cube to be of infinite size (texels on the cube's 
      surface are incredibly far away), the translational movement of texels on the cube 

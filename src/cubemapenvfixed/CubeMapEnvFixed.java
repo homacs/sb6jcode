@@ -76,8 +76,8 @@ public class CubeMapEnvFixed extends Application {
 
         glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
-        object.load(getMediaPath() + "/objects/dragon.sbm");
-//      object.load(getMediaPath() + "/objects/sphere.sbm");
+//        object.load(getMediaPath() + "/objects/dragon.sbm");
+        object.load(getMediaPath() + "/objects/sphere.sbm");
 //        object.load(getMediaPath() + "/objects/cube.sbm");
 
         load_shaders();
