@@ -48,7 +48,7 @@ void main(void)
                                vec3(-1.0,  1.0, -1.0),
                                vec3( 1.0,  1.0, -1.0));
 
-    vs_out.tc = inverse(mat3(view_matrix)) * vertices[gl_VertexID];
+    vs_out.tc = mat3(view_matrix) * vertices[gl_VertexID];
 
     gl_Position = vec4(vertices[gl_VertexID], 1.0);
 }

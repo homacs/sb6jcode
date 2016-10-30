@@ -277,7 +277,7 @@ public class MatrixNxMf
 		for (int r = 0; r < in.rows; r++) {
 			float v = m.get(r, r);
 			if (v != 1f) {
-				m.mulRow(r, 1/v);
+				m.mulRow(r, 1.0f/v);
 			}
 		}
 
@@ -315,6 +315,10 @@ public class MatrixNxMf
 		print(System.out, m);
 		MatrixNxMf I = inverse(m);
 		print(System.out, I);
+		
+		I = inverse(I);
+		print(System.out, I);
+		
 	}
 
 	

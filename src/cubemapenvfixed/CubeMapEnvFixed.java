@@ -104,12 +104,18 @@ public class CubeMapEnvFixed extends Application {
         if (false) {
         	eye = new Vector3f(0f, 0.0f, -distance);
         } else {
-        	eye = new Vector3f(distance * MathHelper.sinf(t), 3*MathHelper.sinf(t), distance * MathHelper.cosf(t));
+        	eye = new Vector3f(distance * MathHelper.sinf(t), 4*MathHelper.sinf(t), distance * MathHelper.cosf(t));
         }
         
         Matrix4x4f view_matrix = Matrix4x4f.lookat(eye,
                                                 new Vector3f(0.0f, 0.0f, 0.0f),
                                                 new Vector3f(0.0f, 1.0f, 0.0f));
+        
+        Matrix4x4f reverse_matrix = view_matrix;
+
+        reverse_matrix = Matrix4x4f.inverse(reverse_matrix);
+        
+        
         // object is steady
         Matrix4x4f mv_matrix = new Matrix4x4f(view_matrix)
 //        		.mul(Matrix4x4f.rotate(t*57, 0.0f, 1.0f, 0.0f))
@@ -125,7 +131,7 @@ public class CubeMapEnvFixed extends Application {
         glUseProgram(skybox_prog);
         glBindVertexArray(skybox_vao);
 
-        glUniformMatrix4(uniforms.skybox.view_matrix, false, view_matrix.toFloatBuffer());
+        glUniformMatrix4(uniforms.skybox.view_matrix, false, reverse_matrix.toFloatBuffer());
 
         glDisable(GL_DEPTH_TEST);
 
@@ -134,7 +140,7 @@ public class CubeMapEnvFixed extends Application {
         glUseProgram(render_prog);
 
         glUniformMatrix4(uniforms.render.mv_matrix, false, mv_matrix.toFloatBuffer());
-        glUniformMatrix4(uniforms.render.reverse_matrix, false, view_matrix.toFloatBuffer());
+        glUniformMatrix4(uniforms.render.reverse_matrix, false, reverse_matrix.toFloatBuffer());
         glUniformMatrix4(uniforms.render.proj_matrix, false, proj_matrix.toFloatBuffer());
 
         glEnable(GL_DEPTH_TEST);
