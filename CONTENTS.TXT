@@ -121,3 +121,6 @@ Chapter III: In Practice
 			Spherical Env. Maps					envmapsphere
 			Equirectangular Maps				equirectangular
 			Cube Maps							cubemapenv, cubemapenvfixed*
+		Material Properties						perpixelgloss
+		Casting Shadows							shadowmapping
+		Atmospheric Effects

@@ -200,6 +200,7 @@ public class ShadowMapping extends Application {
 	    else
 	    {
 	        render_scene(total_time, false);
+	        
 	    }
 	}
 
@@ -291,7 +292,7 @@ public class ShadowMapping extends Application {
 	{
 	    int vs;
 	    int fs;
-
+		
 	    vs = Shader.load(getMediaPath() + "/shaders/shadowmapping/shadowmapping-light.vs.glsl", GL_VERTEX_SHADER);
 	    fs = Shader.load(getMediaPath() + "/shaders/shadowmapping/shadowmapping-light.fs.glsl", GL_FRAGMENT_SHADER);
 
