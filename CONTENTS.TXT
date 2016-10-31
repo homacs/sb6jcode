@@ -119,4 +119,5 @@ Chapter III: In Practice
 		Normal Mapping							bumpmapping
 		Environment Mapping
 			Spherical Env. Maps					envmapsphere
+			Equirectangular Maps				equirectangular
 			Cube Maps							cubemapenv, cubemapenvfixed*
