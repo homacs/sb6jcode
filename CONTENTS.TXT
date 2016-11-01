@@ -124,4 +124,6 @@ Chapter III: In Practice
 		Material Properties						perpixelgloss
 		Casting Shadows							shadowmapping
 		Atmospheric Effects						dispmap
-		Non-Photo-Realistic Rendering			toonshading
+	2. Non-Photo-Realistic Rendering			toonshading
+	3. Alternative Rendering Methods
+		Deferred Shading						deferredshading
