@@ -76,6 +76,8 @@ public class CubeMapEnvFixed extends Application {
 
         glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
+        
+        
 //        object.load(getMediaPath() + "/objects/dragon.sbm");
         object.load(getMediaPath() + "/objects/sphere.sbm");
 //        object.load(getMediaPath() + "/objects/cube.sbm");
@@ -97,13 +99,14 @@ public class CubeMapEnvFixed extends Application {
 
         Matrix4x4f proj_matrix = Matrix4x4f.perspective(60.0f, (float)info.windowWidth / (float)info.windowHeight, 0.1f, 1000.0f);
         
-        // camera is moving counter-clockwise around the object in a 7 meter radius
-        // (remember, positive z-coordinate points towards world observer (not camera))
         float distance = 7f;
         Vector3f eye;
-        if (false) {
+        boolean movingCamera = false;
+		if (movingCamera) {
         	eye = new Vector3f(0f, 0.0f, -distance);
         } else {
+            // camera is moving counter-clockwise around the object in a given radius (distance)
+            // (remember, positive z-coordinate points towards world observer (not camera))
         	eye = new Vector3f(distance * MathHelper.sinf(t), 4*MathHelper.sinf(t), distance * MathHelper.cosf(t));
         }
         
