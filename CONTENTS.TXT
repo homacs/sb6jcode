@@ -123,4 +123,5 @@ Chapter III: In Practice
 			Cube Maps							cubemapenv, cubemapenvfixed*
 		Material Properties						perpixelgloss
 		Casting Shadows							shadowmapping
-		Atmospheric Effects
+		Atmospheric Effects						dispmap
+		Non-Photo-Realistic Rendering			toonshading

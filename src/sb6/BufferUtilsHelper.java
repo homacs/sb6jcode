@@ -28,6 +28,10 @@ public class BufferUtilsHelper {
 		return buffer.capacity() * SIZEOF_SHORT;
 	}
 
+	public static int sizeof(ByteBuffer buffer) {
+		return buffer.capacity();
+	}
+
 
 
 	public static String getFixedLenString(ByteBuffer data, int length) {
