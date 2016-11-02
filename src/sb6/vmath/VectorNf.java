@@ -16,12 +16,16 @@ public class VectorNf {
 	}
 
 	public VectorNf(float f, int len) {
-		apiBuffer = BufferUtils.createFloatBuffer(len);
-		data = new float[len];
+		this(len);
         for (int n = 0; n < data.length; n++)
         {
             data[n] = f;
         }
+	}
+
+	public VectorNf(int len) {
+		apiBuffer = BufferUtils.createFloatBuffer(len);
+		data = new float[len];
 	}
 
 	public float[] getData() {
@@ -129,6 +133,32 @@ public class VectorNf {
 		return apiBuffer;
 	}
 
+	/**
+	 * Length (magnitude/norm) of the vector.
+	 */
+	public float length() {
+	    float result = 0.0f;
+
+	    for (int i = 0; i < size(); ++i)
+	    {
+	        result += get(i) * get(i);
+	    }
+
+	    return (float)Math.sqrt(result);
+	}
+
+	/**
+	 * Number of coordinates (components) used by the vector.
+	 * 
+	 */
+	public int size() {
+		return data.length;
+	}
+
+	public void normalize()
+	{
+	    mul(1.0f/length());
+	}
 
 
 }
