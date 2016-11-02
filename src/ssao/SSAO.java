@@ -29,6 +29,7 @@ import static org.lwjgl.opengl.GL42.*;
 
 public class SSAO extends Application {
     private Random rng = new Random(0x13371337);
+    
     private int      render_program = 0;
     private int      ssao_program = 0;
     private boolean        paused = false;
@@ -65,7 +66,7 @@ public class SSAO extends Application {
 
     private boolean  show_shading = true;
     private boolean  show_ao = true;
-    private float ssao_level = 1f;
+    // private float ssao_level = 1f; // (never used)
     private float ssao_radius = 0.05f;
     private boolean  weight_by_angle = true;
     private boolean randomize_points = true;
@@ -87,6 +88,10 @@ public class SSAO extends Application {
 
     double last_time = 0.0;
     double total_time = 0.0;
+    private Matrix4x4f view_matrix = Matrix4x4f.lookat(new Vector3f(0.0f, 3.0f, 15.0f),
+    		new Vector3f(0.0f, 0.0f, 0.0f),
+    		new Vector3f(0.0f, 1.0f, 0.0f));
+
 
     
     public SSAO() {
@@ -206,32 +211,28 @@ public class SSAO extends Application {
 	
 	    glUseProgram(render_program);
 	
-	    Matrix4x4f lookat_matrix = Matrix4x4f.lookat(new Vector3f(0.0f, 3.0f, 15.0f),
-	    		new Vector3f(0.0f, 0.0f, 0.0f),
-	    		new Vector3f(0.0f, 1.0f, 0.0f));
-	
 	    Matrix4x4f proj_matrix = Matrix4x4f.perspective(50.0f,
 	                                                    (float)info.windowWidth / (float)info.windowHeight,
 	                                                    0.1f,
 	                                                    1000.0f);
 	    glUniformMatrix4(uniforms.render.proj_matrix, false, proj_matrix.toFloatBuffer());
 	
-	    Matrix4x4f mv_matrix = Matrix4x4f.translate(0.0f, -5.0f, 0.0f)
+	    Matrix4x4f model_matrix = Matrix4x4f.translate(0.0f, -5.0f, 0.0f)
 	    		.mul(Matrix4x4f.rotate(f * 5.0f, 0.0f, 1.0f, 0.0f))
 	    		.mul(Matrix4x4f.identity());
-	    Matrix4x4f mvp_matrix = Matrix4x4f.multiply(lookat_matrix, mv_matrix);
-	    glUniformMatrix4(uniforms.render.mv_matrix, false, mvp_matrix.toFloatBuffer());
+	    Matrix4x4f mv_matrix = Matrix4x4f.multiply(view_matrix, model_matrix);
+	    glUniformMatrix4(uniforms.render.mv_matrix, false, mv_matrix.toFloatBuffer());
 	
 	    glUniform1f(uniforms.render.shading_level, show_shading ? (show_ao ? 0.7f : 1.0f) : 0.0f);
 	
 	    object.render();
 	
-	    mv_matrix = Matrix4x4f.translate(0.0f, -4.5f, 0.0f)
+	    model_matrix = Matrix4x4f.translate(0.0f, -4.5f, 0.0f)
 	                .mul(Matrix4x4f.rotate(f * 5.0f, 0.0f, 1.0f, 0.0f))
 	                .mul(Matrix4x4f.scale(4000.0f, 0.1f, 4000.0f))
 	                .mul(Matrix4x4f.identity());
-	    mvp_matrix = Matrix4x4f.multiply(lookat_matrix, mv_matrix);
-	    glUniformMatrix4(uniforms.render.mv_matrix, false, mvp_matrix.toFloatBuffer());
+	    mv_matrix = Matrix4x4f.multiply(view_matrix, model_matrix);
+	    glUniformMatrix4(uniforms.render.mv_matrix, false, mv_matrix.toFloatBuffer());
 	
 	    cube.render();
 	
