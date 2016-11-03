@@ -25,9 +25,9 @@ layout (binding = 0, std140) uniform SAMPLE_POINTS
 
 void main(void)
 {
-    // Get texture position from gl_FragCoord
+    // Get texture position from gl_FragCoord mapped to range [(0,0);(1,1)]
     vec2 P = gl_FragCoord.xy / textureSize(sNormalDepth, 0);
-    // ND = normal and depth
+    // ND = normal and depth for the given pixel
     vec4 ND = textureLod(sNormalDepth, P, 0);
     // Extract normal and depth
     vec3 N = ND.xyz;
@@ -46,10 +46,10 @@ void main(void)
     n = (int(gl_FragCoord.x * 7123.2315 + 125.232) *
          int(gl_FragCoord.y * 3137.1519 + 234.8)) ^
          int(my_depth);
-    // Pull one of the random vectors
+    // Pull one of the random vectors. range: [(0,0,0);(1,1,1)]
     vec4 v = points.random_vectors[n & 255];
 
-    // r is our 'radius randomizer'
+    // r is our 'radius randomizer'. range: [0;0.4]
     float r = (v.r + 3.0) * 0.1;
     if (!randomize_points)
         r = 0.5;

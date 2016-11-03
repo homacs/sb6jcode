@@ -96,6 +96,8 @@ public class SSAO extends Application {
     
     public SSAO() {
 		super("OpenGL SuperBible - Screen-Space Ambient Occlusion");
+		info.samples = 8;
+
 	}
 
 	private float random_float() {
@@ -321,6 +323,15 @@ public class SSAO extends Application {
 	            case 'L':
 	                load_shaders();
 	                break;
+	            case GLFW.GLFW_KEY_SPACE:
+	            	System.out.println("====================================");
+	            	System.out.println("weight_by_angle (N):\t" + weight_by_angle);
+	            	System.out.println("randomize_points (R):\t" + randomize_points);
+	            	System.out.println("point_count (S/X):\t" + point_count);
+	            	System.out.println("show_shading (Q):\t" + show_shading);
+	            	System.out.println("show_ao (W):\t\t" + show_ao);
+	            	System.out.println("ssao_radius (A/Z):\t" + ssao_radius);
+	            	break;
 	        }
 	    }
 	}
