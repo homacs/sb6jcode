@@ -161,7 +161,7 @@ public class Matrix4x4f extends MatrixNxMf {
 	                                new Vector4f(s.get(2), u.get(2), -f.get(2), 0.0f),
 	                                new Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
 
-	    return M .mul( translate((Vector3f)eye.mul(-1.0f)));
+	    return M .mul( translate(Vector3f.multiply(eye, -1.0f)));
 	}
 
 

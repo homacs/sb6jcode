@@ -2,7 +2,7 @@ package sb6.vmath;
 
 
 import java.io.PrintStream;
-import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Random;
 
 import sb6.BufferUtilsHelper;
@@ -13,6 +13,9 @@ public class Vector3f extends VectorNf {
 		this(new float[3]);
 	}
 	
+	public Vector3f(Vector3f eye) {
+		this(Arrays.copyOf(eye.data, eye.data.length));
+	}
 	
 	public Vector3f(float[] data) {
 		super(data);
@@ -70,17 +73,6 @@ public class Vector3f extends VectorNf {
 
 
 
-	public void fromByteBuffer(ByteBuffer in) {
-		fromFloatBuffer(in.asFloatBuffer());
-		in.position(in.position() + Vector3f.sizeof());
-	}
-
-
-	public void toByteBuffer(ByteBuffer buf) {
-		toFloatBuffer(buf.asFloatBuffer());
-		buf.position(buf.position() + Vector3f.sizeof());
-	}
-
 	public void set(float x, float y, float z) {
 		data[0] = x;
 		data[1] = y;
@@ -108,6 +100,11 @@ public class Vector3f extends VectorNf {
 			if (i < data.length) out.print(", ");
 		}
 		out.println(")");
+	}
+
+
+	public static Vector3f multiply(Vector3f eye, float f) {
+		return new Vector3f(eye).mul(f);
 	}
 
 

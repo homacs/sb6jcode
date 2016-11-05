@@ -1,8 +1,11 @@
 package sb6.vmath;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
+
+import sb6.BufferUtilsHelper;
 
 public class VectorNf {
 
@@ -132,6 +135,18 @@ public class VectorNf {
 		apiBuffer.rewind();
 		return apiBuffer;
 	}
+
+	public void fromByteBuffer(ByteBuffer in) {
+		fromFloatBuffer(in.asFloatBuffer());
+		in.position(in.position() + data.length * BufferUtilsHelper.SIZEOF_FLOAT);
+	}
+
+
+	public void toByteBuffer(ByteBuffer buf) {
+		toFloatBuffer(buf.asFloatBuffer());
+		buf.position(buf.position() + data.length * BufferUtilsHelper.SIZEOF_FLOAT);
+	}
+
 
 	/**
 	 * Length (magnitude/norm) of the vector.

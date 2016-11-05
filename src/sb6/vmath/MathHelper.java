@@ -17,4 +17,8 @@ public class MathHelper {
 	public static float powf(float f, float g) {
 		return (float) Math.pow(f, g);
 	}
+	
+	public static float floorf(float f) {
+		return (float)Math.floor(f);
+	}
 }
