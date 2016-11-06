@@ -28,7 +28,12 @@ import static org.lwjgl.opengl.GL32.*;
  * This class and accompanying shaders try to fix this. You 
  * can find more information in the shaders for skybox and reflection.
  * 
+ * TODO: yeah .. and it is still wrong! Needs more work.
+ * 
  * Changes get more apparent when using objects like a cube or a sphere.
+ * 
+ * 
+ * 
  * 
  * @author homac
  *
@@ -77,6 +82,7 @@ public class CubeMapEnvFixed extends Application {
         glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
         
+      // some different objects to test with  
         
 //        object.load(getMediaPath() + "/objects/dragon.sbm");
         object.load(getMediaPath() + "/objects/sphere.sbm");
@@ -93,7 +99,7 @@ public class CubeMapEnvFixed extends Application {
     protected void render(double currentTime)
     {
     	if (!pause){
-    		t += (float)(currentTime - last_time) * 1.1f;
+    		t += (float)(currentTime - last_time) * 0.1f;
     	}
         last_time = currentTime;
 
@@ -101,13 +107,13 @@ public class CubeMapEnvFixed extends Application {
         
         float distance = 7f;
         Vector3f eye;
-        boolean movingCamera = false;
-		if (movingCamera) {
+        boolean steadyCamera = false;
+		if (steadyCamera) {
         	eye = new Vector3f(0f, 0.0f, -distance);
         } else {
             // camera is moving counter-clockwise around the object in a given radius (distance)
             // (remember, positive z-coordinate points towards world observer (not camera))
-        	eye = new Vector3f(distance * MathHelper.sinf(t), 4*MathHelper.sinf(t), distance * MathHelper.cosf(t));
+        	eye = new Vector3f(distance * MathHelper.sinf(t), 0*MathHelper.sinf(t), distance * MathHelper.cosf(t));
         }
         
         Matrix4x4f view_matrix = Matrix4x4f.lookat(eye,
@@ -116,13 +122,12 @@ public class CubeMapEnvFixed extends Application {
         
         Matrix4x4f reverse_matrix = view_matrix;
 
+        // TODO: calculate inverse view matrix here once 
         reverse_matrix = Matrix4x4f.inverse(reverse_matrix);
         
         
         // object is steady
         Matrix4x4f mv_matrix = new Matrix4x4f(view_matrix)
-//        		.mul(Matrix4x4f.rotate(t*57, 0.0f, 1.0f, 0.0f))
-//        		.mul(Matrix4x4f.rotate(t * 130.1f, 0.0f, 1.0f, 0.0f))
         		.mul(Matrix4x4f.translate(0.0f, -0.0f, 0.0f));
 
         glClearBuffer4f(GL_COLOR, 0, 0.2f, 0.2f, 0.2f, 1.0f);

@@ -1,7 +1,7 @@
 #version 410 core
 
 uniform mat4 mv_matrix;
-uniform mat4 reverse_matrix;
+uniform mat4 reverse_matrix; // TODO: input inverse mv matrix from application
 uniform mat4 proj_matrix;
 
 layout (location = 0) in vec4 position;
@@ -11,7 +11,7 @@ out VS_OUT
 {
     vec3 normal;
     vec3 view;
-    mat3 reverse_matrix;
+    flat mat3 reverse_matrix;
 } vs_out;
 
 
@@ -42,7 +42,7 @@ void reflect_interpolate(void) {
     vec3 r = reflect(pos_vs.xyz, N);
 
 	// reverse view transformation
-	vs_out.view = inverse(mat3(reverse_matrix)) * r;
+	vs_out.view = mat3(reverse_matrix) * r;
 
     gl_Position = proj_matrix * pos_vs;
 }

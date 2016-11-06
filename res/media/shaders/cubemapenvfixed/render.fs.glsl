@@ -6,7 +6,7 @@ in VS_OUT
 {
     vec3 normal;
     vec3 view;
-    mat3 reverse_matrix;
+    flat mat3 reverse_matrix;
 } fs_in;
 
 out vec4 color;
@@ -43,5 +43,5 @@ void main(void)
 {
 	// Two options. See vertex shader for more info.
 	reflect_interpolate();
-	// reflect_correct();
+	//reflect_correct();
 }
